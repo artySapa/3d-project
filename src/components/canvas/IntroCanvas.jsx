@@ -9,23 +9,23 @@ const CoolObject = ({ makeResponsive }) => {
 
   return (
     <mesh>
-      <hemisphereLight intensity={0.2} groundColor="black" />
-      <spotLight
-        position={[-20, 50, 10]}
-        angle={0.12}
-        penumbra={1}
-        intensity={1}
-        castShadow
-        shadow-mapSize={1024}
-      />
-      <pointLight intensity={1}/>
-      <primitive
-        object={cooler.scene}
-        scale={makeResponsive ? 0.7 : 1}
-        position={makeResponsive ? [0, -3, -2.2] : [0,-3.25, -1.5]}
-        rotation={[0,0,0]}
+    <hemisphereLight intensity={10} groundColor='black' />
+    <spotLight
+      position={[-200, 500, 100]}
+      angle={0.52}
+      penumbra={1}
+      intensity={10}
+      castShadow
+      shadow-mapSize={1024}
     />
-    </mesh>
+    <pointLight intensity={10} />
+    <primitive
+      object={cooler.scene}
+      scale={makeResponsive ? 0.7 : 0.5}
+      position={makeResponsive ? [0, -3, -2.2] : [0, -1, -1.5]}
+      rotation={[-0.1, -0, -0]}
+    />
+  </mesh>
   );
 };
 
@@ -58,12 +58,12 @@ const IntroCanvas = () => {
       frameloop="demand"
       shadows
       dpr={[1, 2]}
-      camera={{ position: [20, 3, 5], fov: 25 }}
+      camera={{ position: [50, 30, 5], fov: 25 }}
       gl={{ preserveDrawingBuffer: true }}
     >
       <Suspense fallback={<CanvasLoader/>}>
         <OrbitControls
-          enableZoom={false}
+          enableZoom={true}
           maxPolarAngle={Math.PI / 2}
           minPolarAngle={Math.PI / 2}
         />
