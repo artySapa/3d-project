@@ -32,7 +32,7 @@ app.get('/entries', async (req, res) => {
 
 app.post('/entries/new', async (req,res) => {
     const entries = new ThreeEntries({
-        title: req.body.content,
+        title: req.body.title,
         content: req.body.content,
         rank: req.body.rank,
         user: req.body.user,

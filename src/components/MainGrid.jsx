@@ -9,7 +9,7 @@ const MainGrid = () => {
   const [entries, setEntries] = useState([]);
 
   /* FOR ADDITIONS */
-  const [entryContents, setEntryContents] = useState("");
+  const [title, setTitle] = useState("");
   const [rank, setRank] = useState(0);
   const [description, setDescription] = useState("");
   /* ------------- */
@@ -18,7 +18,7 @@ const MainGrid = () => {
     axios
       .post(`${URL}/entries/new`, {
         /* TODO: Add the user functionality here */ 
-        title: entryContents,
+        title: title,
         content: description,
         rank: rank,
         timestamp: Date.now(),
@@ -31,7 +31,7 @@ const MainGrid = () => {
       .catch(console.error);
 
     setRank(0);
-    setEntryContents("");
+    setTitle("");
     setDescription("");
   };
 
@@ -48,17 +48,15 @@ const MainGrid = () => {
     getFeed();
   }, [entries]);
 
-  console.log(entries);
-
   return (
     <div className="flex-column w-[50%] m-[auto]">
       <div className=" p-20 flex justify-between ">
         <input
           className="p-5"
           type="text"
-          value={entryContents}
+          value={title}
           onChange={(e) => {
-            setEntryContents(e.target.value);
+            setTitle(e.target.value);
           }}
           placeholder="Give a name"
         />

@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ThreeSchema = new Schema ({
+    title: {
+        type: String,
+    },
     content: {
         type: String,
         required: true,
@@ -15,9 +18,6 @@ const ThreeSchema = new Schema ({
     user:{
         type: String,
     },
-    title: {
-        type: String,
-    }
 })
 
 const ThreeEntry = mongoose.model("ThreeEntry", ThreeSchema);
