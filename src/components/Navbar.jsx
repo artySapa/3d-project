@@ -7,6 +7,8 @@ const links = [
     {id: "footer", title: "bottom"}
 ]
 
+// CREATE A FULL STACK APP WHERE USERS CAN SHOWCASE THEIR 3D MODELS and ADD THEM and ADD THEM to CART and MB send a message
+
 
 const Navbar = () => {
     const [active, setActive] = useState("")
