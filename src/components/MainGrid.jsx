@@ -9,7 +9,7 @@ const MainGrid = () => {
 
     /* FOR ADDITIONS */
     const [entryContents, setEntryContents] = useState("");
-    const [rank, setRank] = useState(-5);
+    const [rank, setRank] = useState(0);
     /* ------------- */
 
     const addPost = () => {
@@ -26,7 +26,7 @@ const MainGrid = () => {
         })
         .catch(console.error);
 
-        setRank(-5);
+        setRank(0);
         setEntryContents("");
     }
 
@@ -49,7 +49,9 @@ const MainGrid = () => {
             <input className="p-5" type="text" value={rank} onChange={(e) => {setRank(e.target.value)}} placeholder="Set the rank" />
             <button className="bg-[pink] p-2 text-black" onClick={() => {addPost();}}>ADD REQUEST TO THE COMMUNITY</button>
             <div>
-
+                {entries.map((entry) => {
+                    <div>{entry}</div>
+                })}
             </div>
         </div>
     );
