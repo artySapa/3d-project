@@ -32,8 +32,10 @@ app.get('/entries', async (req, res) => {
 
 app.post('/entries/new', async (req,res) => {
     const entries = new ThreeEntries({
+        title: req.body.content,
         content: req.body.content,
         rank: req.body.rank,
+        user: req.body.user,
         timestamp: Date.now(),
     });
     await entries.save();
@@ -45,6 +47,8 @@ app.put('/entries/edit/:_id', async (req,res) => {
 
     entry.content = req.body.content;
     entry.rank = req.body.rank;
+    entry.user = req.body.user;
+    entry.title = req.body.title;
     entry.save();
     res.json(entry);
 })

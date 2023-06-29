@@ -1,22 +1,25 @@
 import React, { useState, useEffect } from "react";
 
 import axios from "axios";
+import PostCard from "./PostCard";
 
 const MainGrid = () => {
   const URL = "http://localhost:8080";
 
   const [entries, setEntries] = useState([]);
-  const [displayFeed, setDisplayFeed] = useState([]);
 
   /* FOR ADDITIONS */
   const [entryContents, setEntryContents] = useState("");
   const [rank, setRank] = useState(0);
+  const [description, setDescription] = useState("");
   /* ------------- */
 
   const addPost = () => {
     axios
       .post(`${URL}/entries/new`, {
-        content: entryContents,
+        /* TODO: Add the user functionality here */ 
+        title: entryContents,
+        content: description,
         rank: rank,
         timestamp: Date.now(),
       })
@@ -29,6 +32,7 @@ const MainGrid = () => {
 
     setRank(0);
     setEntryContents("");
+    setDescription("");
   };
 
   const getFeed = () => {
@@ -40,74 +44,58 @@ const MainGrid = () => {
       .catch(console.error);
   };
 
-  const getItems = () => {
-    if (entries.length === 0) {
-      return;
-    }
-
-    const itemMap = {};
-    for (let i = 0; i < entries.length; i++) {
-      const label = entries[i].rank;
-      const content = entries[i].content;
-      if (!itemMap[label]) {
-        itemMap[label] = { label, entries: [] };
-      }
-      itemMap[label].entries.push(content);
-    }
-
-    const tempCont = Object.values(itemMap);
-    setDisplayFeed(tempCont);
-  };
-
   useEffect(() => {
     getFeed();
-    getItems();
   }, [entries]);
 
   console.log(entries);
 
   return (
-    <div>
-    <div className="p-20 flex justify-between">
-      <input
-        className="p-5"
-        type="text"
-        value={entryContents}
-        onChange={(e) => {
-          setEntryContents(e.target.value);
-        }}
-        placeholder="Give a name"
-      />
-      <input
-        className="p-5"
-        type="text"
-        value={rank}
-        onChange={(e) => {
-          setRank(e.target.value);
-        }}
-        placeholder="Set the rank"
-      />
-      <button
-        className="bg-[pink] p-2 text-black"
-        onClick={() => {
-          addPost();
-        }}
-      >
-        ADD REQUEST TO THE COMMUNITY
-      </button>
+    <div className="flex-column w-[50%] m-[auto]">
+      <div className=" p-20 flex justify-between ">
+        <input
+          className="p-5"
+          type="text"
+          value={entryContents}
+          onChange={(e) => {
+            setEntryContents(e.target.value);
+          }}
+          placeholder="Give a name"
+        />
+        <input
+          className="p-5"
+          type="text"
+          value={description}
+          onChange={(e) => {
+            setDescription(e.target.value);
+          }}
+          placeholder="Describe"
+        />
+        <button
+          className="bg-[pink] p-2 text-black"
+          onClick={() => {
+            addPost();
+          }}
+        >
+          ADD REQUEST TO THE COMMUNITY
+        </button>
+      </div>
+      <div>
+        {entries.map((entry, index) => {
+          return (
+            <div key={index}>
+              <PostCard
+                title={entry.title}
+                content={entry.content}
+                rank={entry.rank}
+                time={entry.timestamp.toLocaleString()}
+                user={entry.user}
+              />
+            </div>
+          );
+        })}
+      </div>
     </div>
-    <div>
-    {entries.map((entry, index) => {
-      return (
-        <div key={index}>
-          <div>{entry.content}</div>
-          <div>{entry.rank}</div>
-          <div>{entry.timestamp}</div>
-        </div>
-      );
-    })}
-  </div>
-  </div>
   );
 };
 

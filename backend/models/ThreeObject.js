@@ -12,6 +12,12 @@ const ThreeSchema = new Schema ({
     timestamp:{
         type: Number,
     },
+    user:{
+        type: String,
+    },
+    title: {
+        type: String,
+    }
 })
 
 const ThreeEntry = mongoose.model("ThreeEntry", ThreeSchema);
