@@ -50,6 +50,7 @@ const MainGrid = () => {
 
   return (
     <div className="flex-column w-[50%] m-[auto]">
+        <h2 className="text-5xl font-bold mt-20">POSTS</h2>
       <div className=" p-20 flex justify-between ">
         <input
           className="p-5"
