@@ -22,6 +22,7 @@ const MainGrid = () => {
         content: description,
         rank: rank,
         timestamp: Date.now(),
+        id: entries.length,
       })
       .then((response) => {
         setEntries((prevEntries) => {
@@ -35,6 +36,7 @@ const MainGrid = () => {
     setDescription("");
   };
 
+ 
   const getFeed = () => {
     axios
       .get(URL + "/entries")
@@ -84,11 +86,14 @@ const MainGrid = () => {
           return (
             <div key={index}>
               <PostCard
+                key={entry._id}
                 title={entry.title}
                 content={entry.content}
                 rank={entry.rank}
                 time={entry.timestamp.toLocaleString()}
                 user={entry.user}
+                id={entry._id}
+                getFeed={getFeed}
               />
             </div>
           );

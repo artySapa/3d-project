@@ -1,37 +1,85 @@
-import React from "react";
+import axios from "axios";
+import React, {useState, useEffect} from "react";
 
-const PostCard = ({title, content, user, time, rank}) => {
-    return (
-        
-        <div class="flex bg-white shadow-lg rounded-lg md:mx-auto my-12 max-w-md justify-center md:max-w-xl">
-   <div class="flex items-center px-4 py-6">
-      <img class="w-12 h-12 rounded-full object-cover mr-4 shadow" src="https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="avatar" />
-      <div class="">
-         <div class="flex items-center justify-between">
-            <h2 class="text-lg font-semibold text-gray-900 -mt-1">{title}</h2>
-         </div>
-         <p class="text-gray-700">{time} </p>
-         <p class="mt-3 text-gray-700 text-sm max-w-xs max-h-[100%] truncate whitespace-normal">
+const PostCard = ({ title, content, user, time, rank, id, getFeed }) => {
+    const URL = "http://localhost:8080";
+    const [activeLike, setActiveLike] = useState(false);
+
+  const changeLikes = (id, currRank) => {
+    if(activeLike){
+        axios
+        .put(`${URL}/entries/rank/${id}`, {rank: currRank - 1})
+        .then((response) => {
+            setActiveLike(!activeLike);
+        })
+        .catch(console.error);
+    }
+    else{
+        axios
+        .put(`${URL}/entries/rank/${id}`, {rank: currRank + 1})
+        .then((response) => {
+            setActiveLike(!activeLike);
+        })
+        .catch(console.error);
+    }
+  }
+
+  useEffect(() => {getFeed()}, [activeLike]);
+
+  return (
+    <div className="flex bg-white shadow-lg rounded-lg md:mx-auto my-12 max-w-md justify-center md:max-w-xl">
+      <div className="flex items-start px-4 py-6 ">
+        <img
+          className="w-[110px] h-[110px] rounded-full object-cover mr-4 shadow"
+          src="https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+          alt="avatar"
+        />
+        <div className="">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-gray-900 -mt-1">{title}</h2>
+          </div>
+          <p className="text-gray-700">{time} </p>
+          <p className="mt-3 text-gray-700 text-sm max-w-xs max-h-[100%] truncate whitespace-normal">
             {content}
-         </p>
-         <div class="mt-4 flex justify-between">
-            <div class="flex mr-2 text-gray-700 text-sm mr-3">
-               <svg fill="none" viewBox="0 0 24 24"  class="w-4 h-4 mr-1" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                </svg>
-               <span>{rank}</span>
+          </p>
+          <div className="mt-4 flex justify-between hover:text-[#FF5733]">
+            <button className="flex mr-2 text-gray-700 text-sm mr-3 hover:text-[#FF5733]" onClick={() => {changeLikes(id, rank)}}>
+              <svg
+                fill="none"
+                viewBox="0 0 24 24"
+                className="w-4 h-4 mr-1"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                />
+              </svg>
+              <span>{rank}</span>
+            </button>
+            <div className="flex mr-2 text-gray-700 text-sm ml-52 hover:text-[#FF5733]">
+              <svg
+                className="h-8 w-8 text-red-500 mr-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="grey"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1"
+                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                />
+              </svg>
+              <button className="hover:text-[#FF5733]">Respond</button>
             </div>
-            <div class="flex mr-2 text-gray-700 text-sm ml-52">
-               <svg fill="none" viewBox="0 0 24 24" class="w-4 h-4 mr-1" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
-                </svg>
-               <span>Respond</span>
-            </div>
-         </div>
+          </div>
+        </div>
       </div>
-   </div>
-</div>
-    );
-}
+    </div>
+  );
+};
 
 export default PostCard;

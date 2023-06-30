@@ -10,7 +10,7 @@ const ThreeSchema = new Schema ({
         required: true,
     },
     rank: {
-        type: String,
+        type: Number,
     },
     timestamp:{
         type: Number,
@@ -18,6 +18,9 @@ const ThreeSchema = new Schema ({
     user:{
         type: String,
     },
+    id:{
+        type: Number
+    }
 })
 
 const ThreeEntry = mongoose.model("ThreeEntry", ThreeSchema);
