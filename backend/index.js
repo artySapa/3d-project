@@ -44,7 +44,7 @@ app.post('/entries/new', async (req,res) => {
 })
 
 app.put('/entries/edit/:_id', async (req,res) => {
-    const entry = await ThreeEntries.findById(req.body._id);
+    const entry = await ThreeEntries.findById(req.params._id);
 
     entry.content = req.body.content;
     entry.rank = req.body.rank;
@@ -67,8 +67,12 @@ app.put('/entries/rank/:_id', async (req, res) => {
     res.json(entry);
   });
 
-app.delete('entries/delete', async (req, res) => {
-    const entry = await ThreeEntries.findByIdAndDelete(req.body._id);
+  app.delete('/entries/delete/:_id', async (req, res) => {
+    const entry = await ThreeEntries.findByIdAndDelete(req.params._id);
+    if (!entry) {
+      return res.status(404).json({ error: 'Entry not found' });
+    }
     res.json(entry);
-})
+  });
+  
 
