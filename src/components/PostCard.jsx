@@ -25,6 +25,8 @@ const PostCard = ({ title, content, user, time, rank, id, getFeed }) => {
 
   const deletePost = (id) => {
     /* TODO: add authorization check */
+    const confirmed = window.confirm("Are you sure you want to delete the post?")
+    if(!confirmed){return;}
     axios
       .delete(`${URL}/entries/delete/${id}`)
       .then((response) => {

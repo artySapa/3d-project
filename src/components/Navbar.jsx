@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 
 const links = [
     {id: "main", title: "main"},
-    {id: "footer", title: "bottom"}
+    {id: "footer", title: "bottom"},
+    {id: "log in", title: "log in"}
 ]
 
 // CREATE A FULL STACK APP WHERE USERS CAN SHOWCASE THEIR 3D MODELS and ADD THEM and ADD THEM to CART and MB send a message
