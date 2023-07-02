@@ -1,86 +1,66 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
+import Login from "./pages/Login";
+import Welcome from "./Welcome";
 
 const links = [
-    {id: "main", title: "main"},
-    {id: "footer", title: "bottom"},
-    {id: "log in", title: "log in"}
-]
-
-// CREATE A FULL STACK APP WHERE USERS CAN SHOWCASE THEIR 3D MODELS and ADD THEM and ADD THEM to CART and MB send a message
-
+  { id: "main", title: "main" },
+  { id: "footer", title: "bottom" },
+  { id: "log in", title: "log in" },
+];
 
 const Navbar = () => {
-    const [active, setActive] = useState("")
+  const [active, setActive] = useState("");
 
-    return (
-        <nav
-      className={"w-full flex items-center py-5 fixed top-0 z-20 bg-slate-900"}
-    >
-      <div className='w-full flex justify-around items-center max-w-7xl mx-auto'>
-        <Link
-          to='/'
-          className='flex items-center gap-2'
-          onClick={() => {
-            setActive("");
-            window.scrollTo(0, 0);
-          }}
-        >
-          <p className='text-white text-[18px] font-bold cursor-pointer flex '>
-            Arty &nbsp;
-            <span className='sm:block hidden'> | 3D Project</span>
-          </p>
-        </Link>
+  const handleLoginClick = () => {
+    setActive("log in");
+  };
 
-        <ul className='list-none hidden sm:flex flex-row gap-10'>
-          {links.map((nav) => (
-            <li
-              key={nav.id}
-              className={`${
-                active === nav.title ? "text-white" : "text-secondary"
-              } hover:text-white text-[18px] font-medium cursor-pointer`}
-              onClick={() => setActive(nav.title)}
-            >
-              <a href={`#${nav.id}`}>{nav.title}</a>
-            </li>
-          ))}
-        </ul>
-
-        {/* <div className='sm:hidden flex flex-1 justify-end items-center'>
-          <img
-            src={toggle ? close : menu}
-            alt='menu'
-            className='w-[28px] h-[28px] object-contain'
-            onClick={() => setToggle(!toggle)}
-          />
-
-          <div
-            className={`${
-              !toggle ? "hidden" : "flex"
-            } p-6 black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl`}
+  return (
+    <Router>
+      <nav className="w-full flex items-center py-5 fixed top-0 z-20 bg-slate-900">
+        <div className="w-full flex justify-around items-center max-w-7xl mx-auto">
+          <Link
+            to="/"
+            className="flex items-center gap-2"
+            onClick={() => {
+              setActive("");
+              window.scrollTo(0, 0);
+            }}
           >
-            <ul className='list-none flex justify-end items-start flex-1 flex-col gap-4'>
-              {navLinks.map((nav) => (
-                <li
-                  key={nav.id}
-                  className={`font-poppins font-medium cursor-pointer text-[16px] ${
-                    active === nav.title ? "text-white" : "text-secondary"
-                  }`}
-                  onClick={() => {
-                    setToggle(!toggle);
-                    setActive(nav.title);
-                  }}
-                >
-                  <a href={`#${nav.id}`}>{nav.title}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div> */}
-      </div>
-    </nav>
-    );
-}
+            <p className="text-white text-[18px] font-bold cursor-pointer flex">
+              Arty &nbsp;
+              <span className="sm:block hidden"> | 3D Project</span>
+            </p>
+          </Link>
+
+          <ul className="list-none hidden sm:flex flex-row gap-10">
+            {links.map((nav) => (
+                
+              <li
+                key={nav.id}
+                className={`${
+                  active === nav.title ? "text-white" : "text-secondary"
+                } hover:text-white text-[18px] font-medium cursor-pointer`}
+                onClick={() => setActive(nav.title)}
+              >
+                {nav.title === "log in" ? (
+                  <Link to="/login">{nav.title}</Link>
+                ) : 
+                nav.title === "log in" ? (
+                  <Link to="/">{nav.title}</Link>
+                ) : <Link to="/">{nav.title}</Link>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </nav>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Welcome />} />
+      </Routes>
+    </Router>
+  );
+};
 
 export default Navbar;

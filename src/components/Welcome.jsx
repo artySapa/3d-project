@@ -1,10 +1,12 @@
 import React from "react";
 
 import IntroCanvas from "./canvas/IntroCanvas";
+import MainGrid from "./MainGrid";
 
 const Welcome = () => {
     return (
-        <section className={`relative flex w-full h-screen mx-auto justify-center align-center`}>
+        <div >
+        <section className={` text-white bg-main bg-cover bg-no-repeat bg-center relative flex w-full h-screen mx-auto justify-center align-center`}>
             <div className="p-40 pl-12 text-black">
                 <div className="flex justify-between mb-10">
                 <p className="text-5xl font-bold">Hello, my name is <span className="text-[#FF5733]">Arty</span></p>
@@ -15,6 +17,8 @@ const Welcome = () => {
                 </div>
             </div>
         </section>
+        <MainGrid />
+        </div>
     );
 }
 
