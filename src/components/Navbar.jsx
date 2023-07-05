@@ -5,8 +5,8 @@ import Welcome from "./Welcome";
 
 const links = [
   { id: "main", title: "main" },
-  { id: "footer", title: "bottom" },
   { id: "log in", title: "log in" },
+  { id: "userview", title: "profile" },
 ];
 
 const Navbar = () => {
