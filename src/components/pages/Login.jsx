@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const Login = () => {
+const Login = (setUser) => {
   const URL = "http://localhost:8080";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -22,6 +22,8 @@ const Login = () => {
         setError(response.data.error);
       } else {
         // Handle successful login, e.g., redirect to dashboard
+        setUser(response.data.username);
+
         console.log("Login successful");
       }
     } catch (error) {

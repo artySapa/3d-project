@@ -9,7 +9,7 @@ const links = [
   { id: "userview", title: "profile" },
 ];
 
-const Navbar = () => {
+const Navbar = (setUser) => {
   const [active, setActive] = useState("");
 
   const handleLoginClick = () => {
@@ -56,7 +56,7 @@ const Navbar = () => {
         </div>
       </nav>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login setUser={setUser}/>} />
         <Route path="/" element={<Welcome />} />
       </Routes>
     </Router>
