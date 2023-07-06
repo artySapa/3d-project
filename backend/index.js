@@ -77,10 +77,11 @@ app.put('/entries/rank/:_id', async (req, res) => {
   
 
 // USER ENDPOINTS
+const User = require("./models/User");
 
 // Get all users
 app.get('/users', async (req, res) => {
-    const users = await User.find();
+    const users = await User.find({});
   
     res.json(users);
   });
@@ -92,6 +93,7 @@ app.get('/users', async (req, res) => {
       res.json({ 'error' : 'Duplicate username exists.'})
       return;
     }
+
     const user = new User({
       username: req.body.username,
       password: req.body.password,

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const Login = () => {
+  const URL = "http://localhost:8080";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -12,7 +13,7 @@ const Login = () => {
     setError("");
 
     try {
-      const response = await axios.post("/login", {
+      const response = await axios.post(`${URL}/login`, {
         username,
         password,
       });
@@ -29,10 +30,25 @@ const Login = () => {
     }
   };
 
-  const handleSignIn = () => {
-    return;
-  }
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    setError("");
 
+    try {
+        const response = await axios.post(`${URL}/users/new`, {
+            username, 
+            password,
+        })
+        if(response.data.error) {
+            setError(response.data.error);
+        }else{
+            console.log("Sign in success");
+        }
+    } catch (error) {
+      console.error(error);
+      setError("An error occurred. Please try again.");
+    }
+};
   const SignInForm = (
     <div className="flex flex-col items-center justify-center min-h-screen bg-primary">
       <div className="max-w-md w-full px-6 py-8 bg-white shadow-md rounded-md">
@@ -78,6 +94,9 @@ const Login = () => {
             <button
               type="submit"
               className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              onClick={(e) => {
+                handleSignIn(e);
+              }}
             >
               Sign in
             </button>
@@ -85,7 +104,7 @@ const Login = () => {
           {error && <p className="text-red-500 text-sm">{error}</p>}
           <div className="flex justify-center">
             <p className="text-black text-xs">Already have an account?</p>
-            <button className="text-blue-500 text-xs ml-5" onClick={() => {setShowSignIn(false)}}>Log in</button>
+            <button className="text-blue-500 text-xs ml-5" onClick={() => {setShowSignIn(false); setPassword(""); setUsername("")}}>Log in</button>
           </div>
         </form>
       </div>
@@ -137,6 +156,9 @@ const Login = () => {
             <button
               type="submit"
               className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              onClick={(e) => {
+                handleLogin(e);
+              }}
             >
               Log In
             </button>
@@ -144,7 +166,7 @@ const Login = () => {
           {error && <p className="text-red-500 text-sm">{error}</p>}
           <div className="flex justify-center">
             <p className="text-black text-xs">Don't have an account?</p>
-            <button className="text-blue-500 text-xs ml-5" onClick={() => {setShowSignIn(true)}}>Sign in</button>
+            <button className="text-blue-500 text-xs ml-5" onClick={() => {setShowSignIn(true); setPassword(""); setUsername("")}}>Sign in</button>
           </div>
         </form>
       </div>
