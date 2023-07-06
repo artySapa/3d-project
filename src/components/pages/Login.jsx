@@ -44,6 +44,9 @@ const Login = (setUser) => {
         if(response.data.error) {
             setError(response.data.error);
         }else{
+            setShowSignIn(false);
+            setUsername("");
+            setPassword("");
             console.log("Sign in success");
         }
     } catch (error) {
