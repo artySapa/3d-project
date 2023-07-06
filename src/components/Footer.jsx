@@ -2,14 +2,14 @@ import React from 'react';
 
 export default function Footer(props) {
   return (
-    <div className="footer bg-main bottom-0 w-full flex justify-around mt-5 p-5">
+    <div className="footer bg-main bottom-0 w-full flex justify-around mt-[10%] p-5">
       <div className="footerEntry flex flex-row justify-end">
         <p className="footerLink">
           <a
             href="https://www.instagram.com/sapartyom/"
             target="_blank"
             rel="noreferrer"
-            className="text-white-600"
+            className="text-black mr-10"
           >
             <i className="fa fa-instagram"></i>
           </a>
@@ -19,7 +19,7 @@ export default function Footer(props) {
             href="https://github.com/artySapa"
             target="_blank"
             rel="noreferrer"
-            className="text-red-600"
+            className="text-black mr-10"
           >
             <i className="fa fa-github"></i>
           </a>
@@ -29,7 +29,7 @@ export default function Footer(props) {
             href="https://www.linkedin.com/in/sapartyom/"
             target="_blank"
             rel="noreferrer"
-            className="text-red-600"
+            className="text-black mr-10"
           >
             <i className="fa fa-linkedin"></i>
           </a>

@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const Login = (setUser) => {
+import { useNavigate } from "react-router-dom";
+
+const Login = ({user, setUser}) => {
   const URL = "http://localhost:8080";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showSignIn, setShowSignIn] = useState(false);
+  const [success, setSuccess] = useState("");
+
+  const navigateTo = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -23,8 +28,12 @@ const Login = (setUser) => {
       } else {
         // Handle successful login, e.g., redirect to dashboard
         setUser(response.data.username);
-
+        setSuccess("Successfully logged in");
+        setUsername("");
+        setPassword("");
         console.log("Login successful");
+
+        setTimeout(() => {navigateTo('/')}, 1000);
       }
     } catch (error) {
       console.error(error);
@@ -47,6 +56,7 @@ const Login = (setUser) => {
             setShowSignIn(false);
             setUsername("");
             setPassword("");
+            setSuccess("Successfully signed in, you will be redirected in a second");
             console.log("Sign in success");
         }
     } catch (error) {
@@ -173,6 +183,7 @@ const Login = (setUser) => {
             <p className="text-black text-xs">Don't have an account?</p>
             <button className="text-blue-500 text-xs ml-5" onClick={() => {setShowSignIn(true); setPassword(""); setUsername("")}}>Sign in</button>
           </div>
+          {success && <p className="text-green-500 text-sm align-center text-center">{success}</p>}
         </form>
       </div>
     </div>

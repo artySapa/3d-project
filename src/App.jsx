@@ -13,7 +13,7 @@ const App = () => {
     <div>
       <div className="relative z-0 bg-primary">
         <div>
-          <Navbar setUser={setUser}/>
+          <Navbar user={user} setUser={setUser}/>
         </div>
         <Footer />
       </div>

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PostCard from "./PostCard";
 
-const MainGrid = () => {
+const MainGrid = ({user, setUser}) => {
   const URL = "http://localhost:8080";
 
   const [entries, setEntries] = useState([]);
@@ -23,6 +23,7 @@ const MainGrid = () => {
         rank: rank,
         timestamp: Date.now(),
         id: entries.length,
+        user: user,
       })
       .then((response) => {
         setEntries((prevEntries) => {
