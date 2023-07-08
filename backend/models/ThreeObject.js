@@ -11,6 +11,7 @@ const ThreeSchema = new Schema ({
     },
     rank: {
         type: Number,
+        user: String,
     },
     timestamp:{
         type: Number,

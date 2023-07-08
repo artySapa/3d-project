@@ -83,7 +83,14 @@ const MainGrid = ({user, setUser}) => {
         </button>
       </div>
       <div>
-        {entries.map((entry, index) => {
+        {entries.reverse().map((entry, index) => {
+          // Convert timestamp to localized date and time string
+          const timestamp = new Date(entry.timestamp);
+          const formattedDate = timestamp.toLocaleDateString();
+          const formattedTime = timestamp.toLocaleTimeString().slice(0,5) + " " + timestamp.toLocaleTimeString().slice(9,12);
+
+
+
           return (
             <div key={index}>
               <PostCard
@@ -91,7 +98,7 @@ const MainGrid = ({user, setUser}) => {
                 title={entry.title}
                 content={entry.content}
                 rank={entry.rank}
-                time={entry.timestamp.toLocaleString()}
+                time={`${formattedDate} ${formattedTime}`}
                 user={entry.user}
                 id={entry._id}
                 getFeed={getFeed}

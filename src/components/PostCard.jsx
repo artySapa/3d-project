@@ -6,16 +6,17 @@ const PostCard = ({ title, content, user, time, rank, id, getFeed }) => {
   const [activeLike, setActiveLike] = useState(false);
 
   const changeLikes = (id, currRank) => {
+
     if (activeLike) {
       axios
-        .put(`${URL}/entries/rank/${id}`, { rank: currRank - 1 })
+        .put(`${URL}/entries/rank/${id}`, { rank: currRank - 1, user: "", })
         .then((response) => {
           setActiveLike(!activeLike);
         })
         .catch(console.error);
     } else {
       axios
-        .put(`${URL}/entries/rank/${id}`, { rank: currRank + 1 })
+        .put(`${URL}/entries/rank/${id}`, { rank: currRank + 1, user: user, activeUser: user})
         .then((response) => {
           setActiveLike(!activeLike);
         })

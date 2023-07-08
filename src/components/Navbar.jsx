@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Welcome from "./Welcome";
+import Profile from "./pages/Profile";
 
 const links = [
   { id: "main", title: "main" },
@@ -47,9 +48,10 @@ const Navbar = ({user, setUser}) => {
                 {nav.title === "log in" ? (
                   <Link to="/login">{nav.title}</Link>
                 ) : 
-                nav.title === "log in" ? (
-                  <Link to="/">{nav.title}</Link>
-                ) : <Link to="/">{nav.title}</Link>}
+                nav.title === "profile" ? 
+                user !== "" ? (
+                  <Link to="/profile">{nav.title}</Link>
+                ) : <Link to="/login">{nav.title}</Link> : <Link to="/">{nav.title}</Link>}
               </li>
             ))}
           </ul>
@@ -58,6 +60,7 @@ const Navbar = ({user, setUser}) => {
       <Routes>
         <Route path="/login" element={<Login user={user} setUser={setUser}/>} />
         <Route path="/" element={<Welcome user={user} setUser={setUser}/>} />
+        <Route path="/profile" element={<Profile user={user} setUser={setUser}/>} />
       </Routes>
     </Router>
   );

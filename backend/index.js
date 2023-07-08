@@ -60,7 +60,8 @@ app.put('/entries/rank/:_id', async (req, res) => {
     if (!entry) {
       return res.status(404).json({ error: 'Entry not found' });
     }
-  
+    
+    if(entry.user === req.activeUser && entry.rank > 0){return}
     entry.rank = req.body.rank;
     await entry.save();
   
