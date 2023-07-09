@@ -57,6 +57,7 @@ const Login = ({user, setUser}) => {
             setUsername("");
             setPassword("");
             setSuccess("Successfully signed in, you will be redirected in a second");
+            setTimeout(() => {navigateTo('/login'); setSuccess("");}, 1000);
             console.log("Sign in success");
         }
     } catch (error) {
