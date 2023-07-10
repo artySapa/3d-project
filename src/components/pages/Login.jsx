@@ -3,13 +3,14 @@ import axios from "axios";
 
 import { useNavigate } from "react-router-dom";
 
-const Login = ({user, setUser}) => {
+const Login = ({user, setUser, setProfPic}) => {
   const URL = "http://localhost:8080";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showSignIn, setShowSignIn] = useState(false);
   const [success, setSuccess] = useState("");
+  const [profImage, setProfImage] = useState(null);
 
   const navigateTo = useNavigate();
 
@@ -28,6 +29,7 @@ const Login = ({user, setUser}) => {
       } else {
         // Handle successful login, e.g., redirect to dashboard
         setUser(response.data.username);
+        setProfPic(response.data.picture);
         setSuccess("Successfully logged in");
         setUsername("");
         setPassword("");
@@ -44,34 +46,63 @@ const Login = ({user, setUser}) => {
   const handleSignIn = async (e) => {
     e.preventDefault();
     setError("");
-
+  
     try {
-        const response = await axios.post(`${URL}/users/new`, {
-            username, 
-            password,
-        })
-        if(response.data.error) {
-            setError(response.data.error);
-        }else{
-            setShowSignIn(false);
-            setUsername("");
-            setPassword("");
-            setSuccess("Successfully signed in, you will be redirected in a second");
-            setTimeout(() => {navigateTo('/login'); setSuccess("");}, 1000);
-            console.log("Sign in success");
-        }
-    } catch (error) {
+        if (profImage) {
+            const imageString = await fileToString(profImage);
+            console.log({username, password, imageString})
+            const requestData = {
+              username: username,
+              password: password,
+              picture: imageString,
+            };
+      
+      const response = await axios.post(`${URL}/users/new`, requestData);
+  
+      if (response.data.error) {
+        setError(response.data.error);
+      } else {
+        setShowSignIn(false);
+        setUsername("");
+        setPassword("");
+    
+        setSuccess("Successfully signed in. You will be redirected in a second.");
+        setTimeout(() => {
+          navigateTo("/login");
+          setSuccess("");
+        }, 1000);
+        console.log("Sign in success");
+      }
+    }} catch (error) {
       console.error(error);
       setError("An error occurred. Please try again.");
     }
-};
+  };
+
+  const fileToString = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+  
+      reader.onload = (event) => {
+        const result = event.target.result;
+        resolve(result);
+      };
+  
+      reader.onerror = (error) => {
+        reject(error);
+      };
+  
+      reader.readAsDataURL(file);
+    });
+  };
+  
   const SignInForm = (
     <div className="flex flex-col items-center justify-center min-h-screen bg-primary">
       <div className="max-w-md w-full px-6 py-8 bg-white shadow-md rounded-md">
         <h2 className="text-2xl font-bold mb-8 text-black text-center">
           Register
         </h2>
-        <form className="space-y-6" onSubmit={handleLogin}>
+        <form className="space-y-6" onSubmit={handleSignIn}>
           <div>
             <label
               htmlFor="username"
@@ -103,6 +134,22 @@ const Login = ({user, setUser}) => {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              className="mt-1 p-2 h-10 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Set Avatar
+            </label>
+            <input
+              id="profPicture"
+              type="file"
+          
+              required
+              onChange={(e) => setProfImage(e.target.files[0])}
               className="mt-1 p-2 h-10 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
             />
           </div>

@@ -8,12 +8,13 @@ import Footer from "./components/Footer";
 
 const App = () => {
   const [user, setUser] = useState('');
+  const [profPic, setProfPic] = useState('');
 
   return (
     <div>
       <div className="relative z-0 bg-primary">
         <div>
-          <Navbar user={user} setUser={setUser}/>
+          <Navbar user={user} setUser={setUser} profPic={profPic} setProfPic={setProfPic}/>
         </div>
         <Footer />
       </div>

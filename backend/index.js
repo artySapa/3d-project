@@ -84,26 +84,36 @@ const User = require("./models/User");
 app.get('/users', async (req, res) => {
     const users = await User.find({});
   
-    res.json(users);
+    const usersWithPicture = users.map((user) => ({
+      _id: user._id,
+      username: user.username,
+      password: user.password,
+      picture: user.picture ? user.picture.toString('base64') : null,
+    }));
+  
+    res.json(usersWithPicture);
   });
+  
   
   // Create new user 
   app.post('/users/new', async (req, res) => {
     const dupUser = await User.findOne({ username: req.body.username });
     if (dupUser) {
-      res.json({ 'error' : 'Duplicate username exists.'})
+      res.json({ error: 'Duplicate username exists.' });
       return;
     }
-
+  
     const user = new User({
       username: req.body.username,
       password: req.body.password,
+      picture: req.body.picture ? Buffer.from(req.body.picture) : null,
     });
   
     await user.save();
   
     res.json(user);
   });
+  
   
   // Delete user
   app.delete('/users/delete/:_id', async (req, res) => {
@@ -118,10 +128,12 @@ app.get('/users', async (req, res) => {
   
     user.username = req.body.username;
     user.password = req.body.password;
+    user.picture = req.body.picture ? Buffer.from(req.body.picture, 'base64') : null;
     user.save();
   
     res.json(user);
   });
+  
   
   // Log in user account
   app.post('/login', async (req, res) => {
