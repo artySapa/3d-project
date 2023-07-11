@@ -11,7 +11,7 @@ const UserSchema = new Schema ({
         required: true,
     },
     picture: {
-        type: Buffer,
+        type: String,
     }
 })
 

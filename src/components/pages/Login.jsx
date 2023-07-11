@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 import {Dialog} from 'primereact/dialog';
 import {InputText} from 'primereact/inputtext';
+import { useEffect } from "react";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -58,52 +59,35 @@ const Login = () => {
     setError("");
   
     try {
-        if (profImage) {
-            const requestData = {
-              username: username,
-              password: password,
-              picture: profImage,
-            };
-      
-      const response = await axios.post(`${URL}/users/new`, requestData);
+      if (profImage) {
+        const formData = new FormData();
+        formData.append("username", username);
+        formData.append("password", password);
+        formData.append("picture", profImage);
   
-      if (response.data.error) {
-        setError(response.data.error);
-      } else {
-        setShowSignIn(false);
-        setUsername("");
-        setPassword("");
-    
-        setSuccess("Successfully signed in. You will be redirected in a second.");
-        setTimeout(() => {
-          navigateTo("/login");
-          setSuccess("");
-        }, 1000);
-        console.log("Sign in success");
+        const response = await axios.post(`${URL}/users/new`, formData);
+  
+        if (response.data.error) {
+          setError(response.data.error);
+        } else {
+          setShowSignIn(false);
+          setUsername("");
+          setPassword("");
+  
+          setSuccess("Successfully signed in. You will be redirected in a second.");
+          setTimeout(() => {
+            navigateTo("/login");
+            setSuccess("");
+          }, 1000);
+          console.log("Sign in success");
+        }
       }
-    }} catch (error) {
+    } catch (error) {
       console.error(error);
       setError("An error occurred. Please try again.");
     }
   };
 
-//   const fileToString = (file) => {
-//     return new Promise((resolve, reject) => {
-//       const reader = new FileReader();
-  
-//       reader.onload = (event) => {
-//         const result = event.target.result;
-//         resolve(result);
-//       };
-  
-//       reader.onerror = (error) => {
-//         reject(error);
-//       };
-  
-//       reader.readAsDataURL(file);
-//     });
-//   };
-  
   const SignInForm = (
     <div className="flex flex-col items-center justify-center min-h-screen bg-primary">
       <div className="max-w-md w-full px-6 py-8 bg-white shadow-md rounded-md">
@@ -160,18 +144,20 @@ const Login = () => {
               onChange={(e) => setProfImage(e.target.files[0])}
               className="mt-1 p-2 h-10 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
             /> */}
-            <InputText
-             type="file" 
-             accept="/image/*"
-             onChange={(e) => {
-                const file = e.target.files[0];
-                if(file && file.type.substring(0,5) === "image"){
-                    setProfImage(file);
-                }else{
-                    setProfImage(null);
-                }
-             }}
-             />
+           <input
+  type="file"
+  accept="image/*"
+  onChange={(e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setProfImage(file);
+    } else {
+      setProfImage(null);
+    }
+  }}
+/>
+
+             <img src={profImage} alt=""></img>
           </div>
           <div>
             <button
@@ -261,7 +247,6 @@ const Login = () => {
     <div>
       <div>
         {showSignIn ? SignInForm : LoginForm}
-        {error && <p className="text-red-500 text-sm">{error}</p>}
       </div>
     </div>
   );

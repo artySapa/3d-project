@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const express = require("express");
 
+const multer = require("multer");
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
 connection = 
 "mongodb+srv://artemsapa:resq@cluster0.ghnh3mq.mongodb.net/"
 
@@ -96,17 +100,17 @@ app.get('/users', async (req, res) => {
   
   
   // Create new user 
-  app.post('/users/new', async (req, res) => {
+  app.post("/users/new", upload.single("picture"), async (req, res) => {
     const dupUser = await User.findOne({ username: req.body.username });
     if (dupUser) {
-      res.json({ error: 'Duplicate username exists.' });
+      res.json({ error: "Duplicate username exists." });
       return;
     }
   
     const user = new User({
       username: req.body.username,
       password: req.body.password,
-      picture: req.body.picture ? Buffer.from(req.body.picture) : null,
+      picture: req.file ? req.file.buffer : null,
     });
   
     await user.save();
@@ -128,7 +132,10 @@ app.get('/users', async (req, res) => {
   
     user.username = req.body.username;
     user.password = req.body.password;
-    user.picture = req.body.picture ? Buffer.from(req.body.picture, 'base64') : null;
+    user.picture = {
+        data: req.file.buffer,
+        contentType: req.file.mimetype
+      };
     user.save();
   
     res.json(user);
