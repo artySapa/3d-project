@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 
 import axios from "axios";
 import PostCard from "./PostCard";
+import { useSelector } from "react-redux";
 
-const MainGrid = ({user, setUser}) => {
+const MainGrid = () => {
   const URL = "http://localhost:8080";
 
   const [entries, setEntries] = useState([]);
+
+  const user = useSelector((state) => state.user);
 
   /* FOR ADDITIONS */
   const [title, setTitle] = useState("");
@@ -23,7 +26,7 @@ const MainGrid = ({user, setUser}) => {
         rank: rank,
         timestamp: Date.now(),
         id: entries.length,
-        user: user,
+        user: user.username,
       })
       .then((response) => {
         setEntries((prevEntries) => {
@@ -49,7 +52,7 @@ const MainGrid = ({user, setUser}) => {
 
   useEffect(() => {
     getFeed();
-  }, [entries]);
+  }, []);
 
   return (
     <div className="flex-column w-[50%] m-[auto]">
@@ -83,7 +86,7 @@ const MainGrid = ({user, setUser}) => {
         </button>
       </div>
       <div>
-        {entries.reverse().map((entry, index) => {
+        {entries.map((entry, index) => {
           // Convert timestamp to localized date and time string
           const timestamp = new Date(entry.timestamp);
           const formattedDate = timestamp.toLocaleDateString();

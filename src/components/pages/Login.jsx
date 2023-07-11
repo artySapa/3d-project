@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+import { useDispatch } from 'react-redux';
+import { login } from '../../../redux/actions';
+
 import { useNavigate } from "react-router-dom";
 
-const Login = ({user, setUser, setProfPic}) => {
+const Login = () => {
+    const dispatch = useDispatch();
+
   const URL = "http://localhost:8080";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -28,14 +33,16 @@ const Login = ({user, setUser, setProfPic}) => {
         setError(response.data.error);
       } else {
         // Handle successful login, e.g., redirect to dashboard
-        setUser(response.data.username);
-        setProfPic(response.data.picture);
+       
         setSuccess("Successfully logged in");
         setUsername("");
         setPassword("");
         console.log("Login successful");
 
-        setTimeout(() => {navigateTo('/')}, 1000);
+
+        dispatch(login({ username: response.data.username, picture: response.data.picture }));
+
+        setTimeout(() => {navigateTo('/profile')}, 1000);
       }
     } catch (error) {
       console.error(error);

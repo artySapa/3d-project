@@ -7,14 +7,14 @@ import MainGrid from "./components/MainGrid";
 import Footer from "./components/Footer";
 
 const App = () => {
-  const [user, setUser] = useState('');
-  const [profPic, setProfPic] = useState('');
+  // const [user, setUser] = useState('');
+  // const [profPic, setProfPic] = useState('');
 
   return (
     <div>
       <div className="relative z-0 bg-primary">
         <div>
-          <Navbar user={user} setUser={setUser} profPic={profPic} setProfPic={setProfPic}/>
+          <Navbar/>
         </div>
         <Footer />
       </div>

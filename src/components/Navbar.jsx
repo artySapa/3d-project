@@ -4,14 +4,17 @@ import Login from "./pages/Login";
 import Welcome from "./Welcome";
 import Profile from "./pages/Profile";
 
+import { useSelector } from "react-redux";
+
 const links = [
   { id: "main", title: "main" },
   { id: "log in", title: "log in" },
   { id: "userview", title: "profile" },
 ];
 
-const Navbar = ({user, setUser, profPic, setProfPic}) => {
+const Navbar = ({setUser, profPic, setProfPic}) => {
   const [active, setActive] = useState("");
+  const user = useSelector((state) => state.user);
 
   const handleLoginClick = () => {
     setActive("log in");
@@ -49,7 +52,7 @@ const Navbar = ({user, setUser, profPic, setProfPic}) => {
                   <Link to="/login">{nav.title}</Link>
                 ) : 
                 nav.title === "profile" ? 
-                user !== "" ? (
+                user.username !== "" ? (
                   <Link to="/profile">{nav.title}</Link>
                 ) : <Link to="/login">{nav.title}</Link> : <Link to="/">{nav.title}</Link>}
               </li>
@@ -58,9 +61,9 @@ const Navbar = ({user, setUser, profPic, setProfPic}) => {
         </div>
       </nav>
       <Routes>
-        <Route path="/login" element={<Login user={user} setUser={setUser} setProfPic={setProfPic}/>} />
-        <Route path="/" element={<Welcome user={user} setUser={setUser}/>} />
-        <Route path="/profile" element={<Profile user={user} setUser={setUser} profPic={profPic}/>} />
+        <Route path="/login" element={<Login/>} />
+        <Route path="/" element={<Welcome />} />
+        <Route path="/profile" element={<Profile/>} />
       </Routes>
     </Router>
   );
