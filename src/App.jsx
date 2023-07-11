@@ -1,9 +1,6 @@
-import React, {useState, useEffect} from "react";
-import { BrowserRouter } from "react-router-dom";
+import React from "react";
 
 import Navbar from "./components/Navbar";
-import Welcome from "./components/Welcome";
-import MainGrid from "./components/MainGrid";
 import Footer from "./components/Footer";
 
 const App = () => {

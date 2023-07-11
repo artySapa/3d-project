@@ -6,6 +6,9 @@ import { login } from '../../../redux/actions';
 
 import { useNavigate } from "react-router-dom";
 
+import {Dialog} from 'primereact/dialog';
+import {InputText} from 'primereact/inputtext';
+
 const Login = () => {
     const dispatch = useDispatch();
 
@@ -15,7 +18,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const [showSignIn, setShowSignIn] = useState(false);
   const [success, setSuccess] = useState("");
-  const [profImage, setProfImage] = useState(null);
+  const [profImage, setProfImage] = useState("");
 
   const navigateTo = useNavigate();
 
@@ -56,12 +59,10 @@ const Login = () => {
   
     try {
         if (profImage) {
-            const imageString = await fileToString(profImage);
-            console.log({username, password, imageString})
             const requestData = {
               username: username,
               password: password,
-              picture: imageString,
+              picture: profImage,
             };
       
       const response = await axios.post(`${URL}/users/new`, requestData);
@@ -86,22 +87,22 @@ const Login = () => {
     }
   };
 
-  const fileToString = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
+//   const fileToString = (file) => {
+//     return new Promise((resolve, reject) => {
+//       const reader = new FileReader();
   
-      reader.onload = (event) => {
-        const result = event.target.result;
-        resolve(result);
-      };
+//       reader.onload = (event) => {
+//         const result = event.target.result;
+//         resolve(result);
+//       };
   
-      reader.onerror = (error) => {
-        reject(error);
-      };
+//       reader.onerror = (error) => {
+//         reject(error);
+//       };
   
-      reader.readAsDataURL(file);
-    });
-  };
+//       reader.readAsDataURL(file);
+//     });
+//   };
   
   const SignInForm = (
     <div className="flex flex-col items-center justify-center min-h-screen bg-primary">
@@ -146,19 +147,31 @@ const Login = () => {
           </div>
           <div>
             <label
-              htmlFor="password"
+             
               className="block text-sm font-medium text-gray-700"
             >
               Set Avatar
             </label>
-            <input
+            {/* <input
               id="profPicture"
               type="file"
           
               required
               onChange={(e) => setProfImage(e.target.files[0])}
               className="mt-1 p-2 h-10 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-            />
+            /> */}
+            <InputText
+             type="file" 
+             accept="/image/*"
+             onChange={(e) => {
+                const file = e.target.files[0];
+                if(file && file.type.substring(0,5) === "image"){
+                    setProfImage(file);
+                }else{
+                    setProfImage(null);
+                }
+             }}
+             />
           </div>
           <div>
             <button
