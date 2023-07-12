@@ -69,9 +69,6 @@ app.put("/entries/rank/:_id", async (req, res) => {
 
   if(req.body.rank < 0){return;}
 
-  if (entry.likedUsers.includes(req.body.user) && entry.rank > 0) {
-    return;
-  }
   if (entry.rank < req.body.rank) {
     entry.rank = req.body.rank;
     entry.likedUsers.push(req.body.user);
