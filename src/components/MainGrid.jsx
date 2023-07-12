@@ -13,8 +13,9 @@ const MainGrid = () => {
 
   /* FOR ADDITIONS */
   const [title, setTitle] = useState("");
-  const [rank, setRank] = useState(0);
+  const [rank, setRank] = useState(0);   // fix this a lot, this is passing to all the entries at once
   const [description, setDescription] = useState("");
+  const [activeLike, setActiveLike] = useState(true);
   /* ------------- */
 
   const addPost = () => {
@@ -54,6 +55,13 @@ const MainGrid = () => {
     getFeed();
   }, []);
 
+  useEffect(() => {
+    if (entries.length > 0) {
+      const likedEntry = entries.find(entry => entry.likedUsers.includes(user.username));
+      setActiveLike(likedEntry ? true : false);
+    }
+  }, [entries, user.username]);
+
   return (
     <div className="flex-column w-[50%] m-[auto]">
         <h2 className="text-5xl font-bold mt-20">POSTS</h2>
@@ -92,8 +100,6 @@ const MainGrid = () => {
           const formattedDate = timestamp.toLocaleDateString();
           const formattedTime = timestamp.toLocaleTimeString().slice(0,5) + " " + timestamp.toLocaleTimeString().slice(9,12);
 
-
-
           return (
             <div key={index}>
               <PostCard
@@ -102,9 +108,10 @@ const MainGrid = () => {
                 content={entry.content}
                 rank={entry.rank}
                 time={`${formattedDate} ${formattedTime}`}
-                user={entry.user}
                 id={entry._id}
                 getFeed={getFeed}
+                activeLike={activeLike}
+                setActiveLike={setActiveLike}
               />
             </div>
           );

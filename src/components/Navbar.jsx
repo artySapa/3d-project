@@ -49,7 +49,8 @@ const Navbar = ({setUser, profPic, setProfPic}) => {
                 onClick={() => setActive(nav.title)}
               >
                 {nav.title === "log in" ? (
-                  <Link to="/login">{nav.title}</Link>
+                    user.username === "" ?
+                  <Link to="/login">{nav.title}</Link> : <Link to="/profile">{nav.title}</Link>
                 ) : 
                 nav.title === "profile" ? 
                 user.username !== "" ? (

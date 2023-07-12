@@ -11,7 +11,6 @@ const ThreeSchema = new Schema ({
     },
     rank: {
         type: Number,
-        user: String,
     },
     timestamp:{
         type: Number,
@@ -20,8 +19,12 @@ const ThreeSchema = new Schema ({
         type: String,
     },
     id:{
-        type: Number
-    }
+        type: Number,
+    },
+    likedUsers: {
+        type: Array,
+    },
+
 })
 
 const ThreeEntry = mongoose.model("ThreeEntry", ThreeSchema);

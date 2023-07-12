@@ -167,7 +167,7 @@ const Login = () => {
                 handleSignIn(e);
               }}
             >
-              Sign in
+              Sign up
             </button>
           </div>
           {error && <p className="text-red-500 text-sm">{error}</p>}
@@ -235,7 +235,7 @@ const Login = () => {
           {error && <p className="text-red-500 text-sm">{error}</p>}
           <div className="flex justify-center">
             <p className="text-black text-xs">Don't have an account?</p>
-            <button className="text-blue-500 text-xs ml-5" onClick={() => {setShowSignIn(true); setPassword(""); setUsername("")}}>Sign in</button>
+            <button className="text-blue-500 text-xs ml-5" onClick={() => {setShowSignIn(true); setPassword(""); setUsername("")}}>Sign up</button>
           </div>
           {success && <p className="text-green-500 text-sm align-center text-center">{success}</p>}
         </form>

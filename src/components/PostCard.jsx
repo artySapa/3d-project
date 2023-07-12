@@ -1,24 +1,29 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 
-const PostCard = ({ title, content, user, time, rank, id, getFeed }) => {
+import { useSelector } from "react-redux";
+
+const PostCard = ({ title, content, time, rank, id, getFeed, activeLike, setActiveLike }) => {
   const URL = "http://localhost:8080";
-  const [activeLike, setActiveLike] = useState(false);
+
+  const userObject = useSelector((state) => state.user);
+
+  const user = userObject.username;
 
   const changeLikes = (id, currRank) => {
-
+    if (!user) {alert("you are not logged in!"); return;}
     if (activeLike) {
       axios
-        .put(`${URL}/entries/rank/${id}`, { rank: currRank - 1, user: "", })
+        .put(`${URL}/entries/rank/${id}`, { rank: currRank - 1, user: user, })
         .then((response) => {
-          setActiveLike(!activeLike);
+          setActiveLike(false);
         })
         .catch(console.error);
     } else {
       axios
-        .put(`${URL}/entries/rank/${id}`, { rank: currRank + 1, user: user, activeUser: user})
+        .put(`${URL}/entries/rank/${id}`, { rank: currRank + 1, user: user})
         .then((response) => {
-          setActiveLike(!activeLike);
+          setActiveLike(true);
         })
         .catch(console.error);
     }
