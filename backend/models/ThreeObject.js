@@ -24,6 +24,9 @@ const ThreeSchema = new Schema ({
     likedUsers: {
         type: Array,
     },
+    active: {
+        type: Boolean,
+    },
 
 })
 

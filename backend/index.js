@@ -1,3 +1,5 @@
+const { useSelector } = require("react-redux");
+
 const mongoose = require("mongoose");
 const cors = require("cors");
 const express = require("express");
@@ -63,6 +65,8 @@ app.put("/entries/rank/:_id", async (req, res) => {
   if (!entry) {
     return res.status(404).json({ error: "Entry not found" });
   }
+
+
   if(req.body.rank < 0){return;}
 
   if (entry.likedUsers.includes(req.body.user) && entry.rank > 0) {
@@ -71,12 +75,14 @@ app.put("/entries/rank/:_id", async (req, res) => {
   if (entry.rank < req.body.rank) {
     entry.rank = req.body.rank;
     entry.likedUsers.push(req.body.user);
+    entry.active = req.body.active;
   } else {
     entry.rank = req.body.rank;
     const index = entry.likedUsers.indexOf(req.body.user);
     if (index > -1) {
       entry.likedUsers.splice(index, 1);
     }
+    entry.active = req.body.active;
   }
   await entry.save();
 

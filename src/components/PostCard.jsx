@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 
 import { useSelector } from "react-redux";
 
-const PostCard = ({ title, content, time, rank, id, getFeed, activeLike, setActiveLike }) => {
+const PostCard = ({ title, content, time, rank, id, getFeed, activeLike2 }) => {
+    const [activeLike, setActiveLike] = useState(activeLike2);
   const URL = "http://localhost:8080";
 
   const userObject = useSelector((state) => state.user);
@@ -11,19 +12,34 @@ const PostCard = ({ title, content, time, rank, id, getFeed, activeLike, setActi
   const user = userObject.username;
 
   const changeLikes = (id, currRank) => {
-    if (!user) {alert("you are not logged in!"); return;}
+    if (!user) {
+      alert("You are not logged in!");
+      return;
+    }
+
+    // Toggle the activeLike state
+    setActiveLike((prevActiveLike) => !prevActiveLike);
+
     if (activeLike) {
       axios
-        .put(`${URL}/entries/rank/${id}`, { rank: currRank - 1, user: user, })
+        .put(`${URL}/entries/rank/${id}`, {
+          rank: currRank - 1,
+          user: user,
+          active: false,
+        })
         .then((response) => {
-          setActiveLike(false);
+          console.log(response);
         })
         .catch(console.error);
     } else {
       axios
-        .put(`${URL}/entries/rank/${id}`, { rank: currRank + 1, user: user})
+        .put(`${URL}/entries/rank/${id}`, {
+          rank: currRank + 1,
+          user: user,
+          active: true,
+        })
         .then((response) => {
-          setActiveLike(true);
+          console.log(response);
         })
         .catch(console.error);
     }
@@ -31,8 +47,12 @@ const PostCard = ({ title, content, time, rank, id, getFeed, activeLike, setActi
 
   const deletePost = (id) => {
     /* TODO: add authorization check */
-    const confirmed = window.confirm("Are you sure you want to delete the post?")
-    if(!confirmed){return;}
+    const confirmed = window.confirm(
+      "Are you sure you want to delete the post?"
+    );
+    if (!confirmed) {
+      return;
+    }
     axios
       .delete(`${URL}/entries/delete/${id}`)
       .then((response) => {
@@ -96,26 +116,30 @@ const PostCard = ({ title, content, time, rank, id, getFeed, activeLike, setActi
                 changeLikes(id, rank);
               }}
             >
-                {!activeLike ?
-              (<svg
-                fill="none"
-                viewBox="0 0 24 24"
-                className="w-4 h-4 mr-1"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                />
-              </svg>)
-              :
-              (<svg className ="text-red-400 h-auto fill-current w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-              <path d="M0 190.9V185.1C0 115.2 50.52 55.58 119.4 44.1C164.1 36.51 211.4 51.37 244 84.02L256 96L267.1 84.02C300.6 51.37 347 36.51 392.6 44.1C461.5 55.58 512 115.2 512 185.1V190.9C512 232.4 494.8 272.1 464.4 300.4L283.7 469.1C276.2 476.1 266.3 480 256 480C245.7 480 235.8 476.1 228.3 469.1L47.59 300.4C17.23 272.1 .0003 232.4 .0003 190.9L0 190.9z"/>
-            </svg>)
-            }
-            <span>{rank}</span>
+              {!activeLike ? (
+                <svg
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  className="w-4 h-4 mr-1"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  className="text-red-400 h-auto fill-current w-4 h-4 mr-1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                >
+                  <path d="M0 190.9V185.1C0 115.2 50.52 55.58 119.4 44.1C164.1 36.51 211.4 51.37 244 84.02L256 96L267.1 84.02C300.6 51.37 347 36.51 392.6 44.1C461.5 55.58 512 115.2 512 185.1V190.9C512 232.4 494.8 272.1 464.4 300.4L283.7 469.1C276.2 476.1 266.3 480 256 480C245.7 480 235.8 476.1 228.3 469.1L47.59 300.4C17.23 272.1 .0003 232.4 .0003 190.9L0 190.9z" />
+                </svg>
+              )}
+              <span>{rank}</span>
             </button>
             <div className="flex mr-2 text-gray-700 text-sm ml-52 hover:text-[#FF5733]">
               <svg

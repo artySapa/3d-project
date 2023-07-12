@@ -15,7 +15,7 @@ const MainGrid = () => {
   const [title, setTitle] = useState("");
   const [rank, setRank] = useState(0);   // fix this a lot, this is passing to all the entries at once
   const [description, setDescription] = useState("");
-  const [activeLike, setActiveLike] = useState(true);
+//   const [activeLike, setActiveLike] = useState(true); // fix this a lot, this is passing to all the entries at once
   /* ------------- */
 
   const addPost = () => {
@@ -53,14 +53,10 @@ const MainGrid = () => {
 
   useEffect(() => {
     getFeed();
-  }, []);
-
+  }, [entries]);
   useEffect(() => {
-    if (entries.length > 0) {
-      const likedEntry = entries.find(entry => entry.likedUsers.includes(user.username));
-      setActiveLike(likedEntry ? true : false);
-    }
-  }, [entries, user.username]);
+    getFeed();
+  }, []);
 
   return (
     <div className="flex-column w-[50%] m-[auto]">
@@ -100,6 +96,8 @@ const MainGrid = () => {
           const formattedDate = timestamp.toLocaleDateString();
           const formattedTime = timestamp.toLocaleTimeString().slice(0,5) + " " + timestamp.toLocaleTimeString().slice(9,12);
 
+          const likedEntry = entries.find(entry => entry.likedUsers.includes(user.username));
+
           return (
             <div key={index}>
               <PostCard
@@ -110,8 +108,7 @@ const MainGrid = () => {
                 time={`${formattedDate} ${formattedTime}`}
                 id={entry._id}
                 getFeed={getFeed}
-                activeLike={activeLike}
-                setActiveLike={setActiveLike}
+                activeLike2={likedEntry}
               />
             </div>
           );
