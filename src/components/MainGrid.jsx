@@ -53,7 +53,7 @@ const MainGrid = () => {
 
   useEffect(() => {
     getFeed();
-  }, [entries]);
+  }, [entries, rank]);
   useEffect(() => {
     getFeed();
   }, []);
@@ -96,7 +96,13 @@ const MainGrid = () => {
           const formattedDate = timestamp.toLocaleDateString();
           const formattedTime = timestamp.toLocaleTimeString().slice(0,4) + " " + timestamp.toLocaleTimeString().slice(8,12);
 
-          const likedEntry = entries.find(entry => entry.likedUsers.includes(user.username));
+          let passLike = false;
+
+          if(entry.likedUsers.includes(user.username)){
+            passLike = true;
+          }else{
+            passLike = false;
+          }
 
           return (
             <div key={index}>
@@ -108,7 +114,7 @@ const MainGrid = () => {
                 time={`${formattedDate} ${formattedTime}`}
                 id={entry._id}
                 getFeed={getFeed}
-                activeLike2={likedEntry}
+                activeLike2={passLike}
               />
             </div>
           );

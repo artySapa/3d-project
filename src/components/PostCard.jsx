@@ -69,6 +69,7 @@ const PostCard = ({ title, content, time, rank, id, getFeed, activeLike2 }) => {
     getFeed();
   }, [activeLike]);
 
+
   return (
     <div className="flex bg-white shadow-lg rounded-lg md:mx-auto my-12 max-w-md justify-center md:max-w-xl">
       <div className="flex items-start px-4 py-6 ">

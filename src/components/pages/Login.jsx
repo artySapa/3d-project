@@ -19,8 +19,10 @@ const Login = () => {
   const [error, setError] = useState("");
   const [showSignIn, setShowSignIn] = useState(false);
   const [success, setSuccess] = useState("");
-//   const [profImage, setProfImage] = useState("");
-  const [profImageUrl, setProfImageUrl] = useState(""); // New state variable
+  const [profImage, setProfImage] = useState("");
+
+  const [profImageBase64, setProfImageBase64] = useState(""); // New state variable
+
 
   const navigateTo = useNavigate();
   const handleLogin = async (e) => {
@@ -83,11 +85,12 @@ const Login = () => {
     setError("");
 
     try {
-      if (profImageUrl) {
+      if (profImageBase64) {
         const formData = new FormData();
+        console.log(profImageBase64);
         formData.append("username", username);
         formData.append("password", password);
-        formData.append("picture", profImageUrl);
+        formData.append("picture", profImageBase64);
 
         const response = await axios.post(`${URL}/users/new`, formData);
 
@@ -113,6 +116,16 @@ const Login = () => {
       setError("An error occurred. Please try again.");
     }
   };
+
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+      reader.readAsDataURL(file);
+    });
+  };
+
 
   const SignInForm = (
     <div className="flex flex-col items-center justify-center min-h-screen bg-primary">
@@ -171,14 +184,15 @@ const Login = () => {
               type="file"
               accept="image/*"
               className="text-black"
-              onChange={(e) => {
+              onChange={async (e) => {
                 const file = e.target.files[0];
                 if (file) {
-                //   setProfImage(file);
-                  setProfImageUrl(window.URL.createObjectURL(file)); // Format the image URL
+                  setProfImage(file);
+                  const base64 = await convertToBase64(file);
+                  setProfImageBase64(base64); // Set the Base64-encoded image string directly
                 } else {
-                //   setProfImage(null);
-                  setProfImageUrl(""); // Format the image URL
+                  setProfImage(null);
+                  setProfImageBase64("");
                 }
               }}
             />
@@ -295,7 +309,7 @@ const Login = () => {
     <div>
       <div>
         {showSignIn ? SignInForm : LoginForm}
-        {profImageUrl && <img src={profImageUrl} alt="Profile Picture" />}
+        {profImageBase64 && <img src={profImageBase64} alt="Profile Picture" />} {/* Display the Base64-encoded image */}
       </div>
     </div>
   );
