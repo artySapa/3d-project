@@ -96,11 +96,19 @@ app.put("/entries/rank/:_id", async (req, res) => {
 });
 
 app.delete("/entries/delete/:_id", async (req, res) => {
-  const entry = await ThreeEntries.findByIdAndDelete(req.params._id);
-  if (!entry) {
+  const entry = await ThreeEntries.findById(req.params._id);
+
+  if(entry.user !== req.body.user){
+    return res.status(404).json({error: "This post belongs to someone else!"});
+  }
+
+  const deleted = await ThreeEntries.findByIdAndDelete(req.params._id);
+
+  if (!deleted) {
     return res.status(404).json({ error: "Entry not found" });
   }
-  res.json(entry);
+
+  res.json(deleted);
 });
 
 // USER ENDPOINTS

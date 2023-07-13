@@ -10,6 +10,7 @@ const PostCard = ({ title, content, time, rank, id, getFeed, activeLike2 }) => {
   const userObject = useSelector((state) => state.user);
 
   const user = userObject.username;
+  const userImage = userObject.picture; // save this to a database to retrieve later and thats it
 
   const changeLikes = (id, currRank) => {
     if (!user) {
@@ -54,7 +55,7 @@ const PostCard = ({ title, content, time, rank, id, getFeed, activeLike2 }) => {
       return;
     }
     axios
-      .delete(`${URL}/entries/delete/${id}`)
+      .delete(`${URL}/entries/delete/${id}`, {user})
       .then((response) => {
         console.log(`Post ${id} was deleted from the database`);
         console.log(response);
@@ -62,6 +63,7 @@ const PostCard = ({ title, content, time, rank, id, getFeed, activeLike2 }) => {
       })
       .catch((error) => {
         console.error(error);
+        alert("This post does not belong to you!");
       });
   };
 
@@ -75,7 +77,7 @@ const PostCard = ({ title, content, time, rank, id, getFeed, activeLike2 }) => {
       <div className="flex items-start px-4 py-6 ">
         <img
           className="w-[110px] h-[110px] rounded-full object-cover mr-4 shadow"
-          src="https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+          src={userImage}
           alt="avatar"
         />
         <div className="">
