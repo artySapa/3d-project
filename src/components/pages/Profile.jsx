@@ -29,7 +29,7 @@ const Profile = () => {
         {"\u202F"}!
       </h2>
       {picture && (
-        <img src={picture} alt="Profile Picture" className="mt-4" />
+        <img src={picture} alt="Profile Picture" className="w-[310px] h-[310px] rounded-full object-cover mr-2 shadow mt-[50px] ml-[50px]" />
       )}
     </div>
   );
