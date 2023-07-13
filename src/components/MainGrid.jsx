@@ -94,7 +94,7 @@ const MainGrid = () => {
           // Convert timestamp to localized date and time string
           const timestamp = new Date(entry.timestamp);
           const formattedDate = timestamp.toLocaleDateString();
-          const formattedTime = timestamp.toLocaleTimeString().slice(0,5) + " " + timestamp.toLocaleTimeString().slice(9,12);
+          const formattedTime = timestamp.toLocaleTimeString().slice(0,4) + " " + timestamp.toLocaleTimeString().slice(8,12);
 
           const likedEntry = entries.find(entry => entry.likedUsers.includes(user.username));
 

@@ -26,6 +26,7 @@ const ThreeSchema = new Schema ({
     },
     active: {
         type: Boolean,
+        default: false,
     },
 
 })

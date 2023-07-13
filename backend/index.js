@@ -4,9 +4,16 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const express = require("express");
 
+const path = require("path");
+
 const multer = require("multer");
 const storage = multer.memoryStorage();
-const upload = multer({ storage });
+const upload = multer({
+    storage,
+    limits: {
+      fileSize: 10 * 1024 * 1024, // 10MB
+    },
+  });
 
 connection = "mongodb+srv://artemsapa:resq@cluster0.ghnh3mq.mongodb.net/";
 
@@ -21,6 +28,8 @@ mongoose
   .catch(console.error);
 
 const app = express();
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.json());
 app.use(cors());
