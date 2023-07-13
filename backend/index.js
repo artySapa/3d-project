@@ -131,7 +131,7 @@ app.post("/users/new", upload.single("picture"), async (req, res) => {
   const user = new User({
     username: req.body.username,
     password: req.body.password,
-    picture: req.file ? req.file.buffer : null,
+    picture: req.body.picture,
   });
 
   await user.save();

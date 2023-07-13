@@ -29,7 +29,7 @@ const Profile = () => {
         {"\u202F"}!
       </h2>
       {picture && (
-        <img src={window.URL.createObjectURL(picture)} alt="Profile Picture" className="mt-4" />
+        <img src={picture} alt="Profile Picture" className="mt-4" />
       )}
     </div>
   );

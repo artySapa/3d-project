@@ -87,7 +87,7 @@ const Login = () => {
         const formData = new FormData();
         formData.append("username", username);
         formData.append("password", password);
-        formData.append("picture", profImage);
+        formData.append("picture", profImageUrl);
 
         const response = await axios.post(`${URL}/users/new`, formData);
 
