@@ -55,7 +55,7 @@ const PostCard = ({ title, content, time, rank, id, getFeed, activeLike2 }) => {
       return;
     }
     axios
-      .delete(`${URL}/entries/delete/${id}`, {user})
+      .delete(`${URL}/entries/delete/${id}`, {username: userObject.username})
       .then((response) => {
         console.log(`Post ${id} was deleted from the database`);
         console.log(response);

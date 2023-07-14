@@ -103,6 +103,7 @@ const MainGrid = () => {
           }else{
             passLike = false;
           }
+          console.log(entry);
 
           return (
             <div key={index}>

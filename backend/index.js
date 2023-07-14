@@ -98,7 +98,7 @@ app.put("/entries/rank/:_id", async (req, res) => {
 app.delete("/entries/delete/:_id", async (req, res) => {
   const entry = await ThreeEntries.findById(req.params._id);
 
-  if(entry.user !== req.body.user){
+  if(entry.user !== req.body.username){
     return res.status(404).json({error: "This post belongs to someone else!"});
   }
 
