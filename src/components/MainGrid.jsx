@@ -19,6 +19,10 @@ const MainGrid = () => {
   /* ------------- */
 
   const addPost = () => {
+    if(!user.username){
+        alert("Please log in first!");
+        return;
+    }
     axios
       .post(`${URL}/entries/new`, {
         /* TODO: Add the user functionality here */ 
@@ -103,7 +107,6 @@ const MainGrid = () => {
           }else{
             passLike = false;
           }
-          console.log(entry);
 
           return (
             <div key={index}>

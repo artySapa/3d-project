@@ -63,7 +63,7 @@ const PostCard = ({ title, content, time, rank, id, getFeed, activeLike2 }) => {
       })
       .catch((error) => {
         console.error(error);
-        alert("This post does not belong to you!");
+        alert("This post does not belong to you!"); 
       });
   };
 
