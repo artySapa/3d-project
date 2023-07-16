@@ -49,8 +49,8 @@ const MainGrid = () => {
   const getFeed = () => {
     axios
       .get(URL + "/entries")
-      .then((response) => {
-        setEntries(response.data);
+      .then(async (response) => {
+         await setEntries(response.data.reverse());
       })
       .catch(console.error);
   };

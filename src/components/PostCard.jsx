@@ -48,14 +48,14 @@ const PostCard = ({ title, content, time, rank, id, getFeed, activeLike2 }) => {
 
   const deletePost = (id) => {
     /* TODO: add authorization check */
-    const confirmed = window.confirm(
-      "Are you sure you want to delete the post?"
-    );
+    const confirmed = window.confirm("Are you sure you want to delete the post?");
     if (!confirmed) {
       return;
     }
     axios
-      .delete(`${URL}/entries/delete/${id}`, {username: userObject.username})
+      .delete(`${URL}/entries/delete/${id}`, {
+        data: { username: userObject.username }, // Pass username in the request body
+      })
       .then((response) => {
         console.log(`Post ${id} was deleted from the database`);
         console.log(response);
@@ -63,9 +63,10 @@ const PostCard = ({ title, content, time, rank, id, getFeed, activeLike2 }) => {
       })
       .catch((error) => {
         console.error(error);
-        alert("This post does not belong to you!"); 
+        alert("This post does not belong to you!");
       });
   };
+  
 
   useEffect(() => {
     getFeed();
