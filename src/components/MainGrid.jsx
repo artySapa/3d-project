@@ -65,9 +65,9 @@ const MainGrid = () => {
   }, []);
 
   return (
-    <div className="flex-column w-[50%] m-[auto]">
-        <h2 className="text-5xl font-bold mt-20">POSTS</h2>
-      <div className=" p-20 flex justify-between ">
+    <div className="flex-column m-[auto] align-center">
+        <h2 className="text-5xl w-[50%] m-[auto] font-bold mt-20">POSTS</h2>
+      <div className=" p-20 w-[50%] m-[auto] flex justify-between ">
         <input
           className="p-5"
           type="text"
@@ -95,7 +95,7 @@ const MainGrid = () => {
           ADD REQUEST TO THE COMMUNITY
         </button>
       </div>
-      <div>
+      <div className="inline-grid gap-4 ml-[5%] grid-cols-3 w-[90%]">
         {entries.map((entry, index) => {
           // Convert timestamp to localized date and time string
           const timestamp = new Date(entry.timestamp);

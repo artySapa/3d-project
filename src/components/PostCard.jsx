@@ -3,8 +3,12 @@ import React, { useState, useEffect } from "react";
 
 import { useSelector } from "react-redux";
 
+import ResponseDialog from "./pages/ResponseDialog";
+
 const PostCard = ({ title, content, time, rank, id, getFeed, activeLike2, picture }) => {
   const [activeLike, setActiveLike] = useState(activeLike2);
+  const [dialog, setDialog] = useState(false);
+
   const URL = "http://localhost:8080";
 
   const userObject = useSelector((state) => state.user);
@@ -159,11 +163,12 @@ const PostCard = ({ title, content, time, rank, id, getFeed, activeLike2, pictur
                   d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                 />
               </svg>
-              <button className="hover:text-[#FF5733]">Respond</button>
+              <button className="hover:text-[#FF5733]" onClick={() => {setDialog(true)}}>Respond</button>
             </div>
           </div>
         </div>
       </div>
+      {dialog && <ResponseDialog setDialog={setDialog}/>}
     </div>
   );
 };
