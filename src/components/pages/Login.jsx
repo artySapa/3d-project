@@ -309,7 +309,7 @@ const Login = () => {
     <div>
       <div>
         {showSignIn ? SignInForm : LoginForm}
-        {profImageBase64 && <img src={profImageBase64} alt="Profile Picture" />} {/* Display the Base64-encoded image */}
+        {/* {profImageBase64 && <img src={profImageBase64} alt="Profile Picture" />} Display the Base64-encoded image */}
       </div>
     </div>
   );

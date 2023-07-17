@@ -32,6 +32,7 @@ const MainGrid = () => {
         timestamp: Date.now(),
         id: entries.length,
         user: user.username,
+        picture: user.picture,
       })
       .then((response) => {
         setEntries((prevEntries) => {
@@ -43,6 +44,7 @@ const MainGrid = () => {
     setRank(0);
     setTitle("");
     setDescription("");
+    console.log(entries);
   };
 
  
@@ -119,6 +121,7 @@ const MainGrid = () => {
                 id={entry._id}
                 getFeed={getFeed}
                 activeLike2={passLike}
+                picture={entry.picture}
               />
             </div>
           );

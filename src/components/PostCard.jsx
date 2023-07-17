@@ -3,14 +3,14 @@ import React, { useState, useEffect } from "react";
 
 import { useSelector } from "react-redux";
 
-const PostCard = ({ title, content, time, rank, id, getFeed, activeLike2 }) => {
-    const [activeLike, setActiveLike] = useState(activeLike2);
+const PostCard = ({ title, content, time, rank, id, getFeed, activeLike2, picture }) => {
+  const [activeLike, setActiveLike] = useState(activeLike2);
   const URL = "http://localhost:8080";
 
   const userObject = useSelector((state) => state.user);
 
   const user = userObject.username;
-  const userImage = userObject.picture; // save this to a database to retrieve later and thats it
+//   const userImage = userObject.picture; // save this to a database to retrieve later and thats it
 
   const changeLikes = (id, currRank) => {
     if (!user) {
@@ -78,7 +78,7 @@ const PostCard = ({ title, content, time, rank, id, getFeed, activeLike2 }) => {
       <div className="flex items-start px-4 py-6 ">
         <img
           className="w-[110px] h-[110px] rounded-full object-cover mr-4 shadow"
-          src={userImage}
+          src={picture}
           alt="avatar"
         />
         <div className="">

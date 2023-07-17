@@ -28,6 +28,9 @@ const ThreeSchema = new Schema ({
         type: Boolean,
         default: false,
     },
+    picture: {
+        type: String,
+    }
 
 })
 

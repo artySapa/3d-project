@@ -52,6 +52,7 @@ app.post("/entries/new", async (req, res) => {
     user: req.body.user,
     id: req.body.id,
     timestamp: Date.now(),
+    picture: req.body.picture,
   });
   await entries.save();
   res.json(entries);
@@ -122,7 +123,8 @@ app.get("/users", async (req, res) => {
     _id: user._id,
     username: user.username,
     password: user.password,
-    picture: user.picture ? user.picture.toString("base64") : null,
+    // picture: user.picture ? user.picture.toString("base64") : null,
+    picture: user.picture,
   }));
 
   res.json(usersWithPicture);
