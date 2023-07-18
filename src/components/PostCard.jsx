@@ -163,12 +163,12 @@ const PostCard = ({ title, content, time, rank, id, getFeed, activeLike2, pictur
                   d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                 />
               </svg>
-              <button className="hover:text-[#FF5733]" onClick={() => {setDialog(true)}}>Respond</button>
+              <button className="hover:text-[#FF5733]" onClick={() => {if(user.username != ""){setDialog(true)}else{alert("You are not logged in!")}}}>Respond</button>
             </div>
           </div>
         </div>
       </div>
-      {dialog && <ResponseDialog setDialog={setDialog}/>}
+      {dialog && <ResponseDialog setDialog={setDialog} title={title} content={content}/>}
     </div>
   );
 };
