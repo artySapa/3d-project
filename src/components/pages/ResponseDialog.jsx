@@ -13,7 +13,6 @@ const ResponseDialog = ({ postId, setDialog, title, content }) => {
     // Reset the form and close the dialog
     setComment("");
     setFile(null);
-    // setDialog(false);
   };
 
   const handleCommentChange = (e) => {
@@ -63,7 +62,7 @@ const ResponseDialog = ({ postId, setDialog, title, content }) => {
           </div>
         </div>
         <textarea
-          className="w-full p-4 mb-4 border border-gray-300 rounded text-white"
+          className="w-full p- mb-4 border border-gray-300 rounded text-white"
           placeholder="Enter your comment..."
           value={comment}
           onChange={handleCommentChange}
