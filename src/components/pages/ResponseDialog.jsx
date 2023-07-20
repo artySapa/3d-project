@@ -1,18 +1,34 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+import DisplayModel from "../canvas/DisplayModel";
+
 const ResponseDialog = ({ postId, setDialog, title, content }) => {
   const [comment, setComment] = useState("");
   const [file, setFile] = useState(null);
+  const [error, setError] = useState("");
 
-  const handleSubmit = () => {
-    // Perform the submission logic here
-    // axios to send the comment and file to the server
-    // Make sure to include the postId in the request body or URL
+  const handleSubmit = async () => {
+    // Create a FormData object to send the file
+    const formData = new FormData();
+    formData.append("file", file);
 
-    // Reset the form and close the dialog
-    setComment("");
-    setFile(null);
+    try {
+      // Make a POST request to upload the GLTF file to the backend
+      await axios.post("/comment/new", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      // Reset form fields after successful submission
+      setComment("");
+      setFile(null);
+    } catch (error) {
+      // Handle any errors that occur during the upload process
+
+      console.error("Error uploading file:", error);
+    }
   };
 
   const handleCommentChange = (e) => {
@@ -68,6 +84,8 @@ const ResponseDialog = ({ postId, setDialog, title, content }) => {
           onChange={handleCommentChange}
         />
         <input type="file" onChange={handleFileChange} className="mb-4" />
+        {error && <p className="text-red-500 text-sm">{error}</p>}
+        {file && <DisplayModel file={file}/>}
         <div className="flex justify-end">
           <button
             className="px-4 py-2 bg-blue-500 text-white rounded"
