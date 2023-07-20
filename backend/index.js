@@ -186,3 +186,17 @@ app.post("/login", async (req, res) => {
     res.json({ error: "Incorrect password" });
   }
 });
+
+
+// POST COMMENTS
+const Comments = require("./models/Comments");
+
+app.post('/comment/new', upload.single('file'), async (req, res) => {
+    const newComment = new Comments({
+        user: req.body.user,
+        file: req.body.file,
+        id: req.body.id,
+    });
+    await newComment.save();
+    res.json(newComment);
+})
