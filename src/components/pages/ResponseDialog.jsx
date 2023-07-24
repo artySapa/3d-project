@@ -36,7 +36,7 @@ const ResponseDialog = ({ postId, setDialog, title, content }) => {
   };
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    setFile(URL.createObjectURL(e.target.files[0]));
   };
 
   return (
@@ -69,11 +69,11 @@ const ResponseDialog = ({ postId, setDialog, title, content }) => {
         <h2 className="text-3xl align-center text-center font-semibold mb-4">
           {title}
         </h2>
-        <div class="m-7">
-          <div class="message">
-            <p class="sender">You:</p>
-            <div class="bg-gray-300 rounded-lg p-4">
-              <p class="text-xl font-semibold mb-4">{content}</p>
+        <div className="m-7">
+          <div className="message">
+            <p className="sender">You:</p>
+            <div className="bg-gray-300 rounded-lg p-4">
+              <p className="text-xl font-semibold mb-4">{content}</p>
             </div>
           </div>
         </div>

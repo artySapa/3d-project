@@ -4,9 +4,13 @@ import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
 
 import CanvasLoader from './Loader';
 
-const CoolObject = ({ file }) => {
-    const cool = useGLTF({file});
-  
+const CoolObject = ({ makeResponsive, file }) => {
+    const cool = useGLTF(file,true);
+    
+    // useEffect(() => {
+    //     return () => URL.revokeObjectURL(gltfURL);
+    //   }, [gltfURL]);
+
     return (
         <mesh>
         <hemisphereLight intensity={10} groundColor='black' />

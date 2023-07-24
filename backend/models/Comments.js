@@ -7,7 +7,7 @@ const Comment = new Schema({
         type: Number,
     },
     file: {
-        type: String,
+        type: Buffer,
     },
     user: {
         type: String,

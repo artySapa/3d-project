@@ -193,33 +193,25 @@ const Comments = require("./models/Comments");
 
 // POST endpoint for handling GLTF file upload
 app.post("/comment/new", upload.single("file"), async (req, res) => {
-    // // Assuming you are using the 'Comments' model you defined for storing comments
-    // const Comments = require("./models/Comments");
-  
-    // Get the file from the request
     const gltfFile = req.file;
   
-    // Assuming you want to store the file data as a base64-encoded string in the database
-    const fileData = gltfFile.buffer.toString("base64");
-  
-    // You may also want to store other relevant data along with the file, such as the user and post ID
-    const { user, id } = req.body;
+    // Save the file buffer (binary data) directly to your database
+    // Assuming you are using the 'Comments' model you defined for storing comments
+    const Comments = require("./models/Comments");
   
     try {
-      // Create a new comment object with the file data and other relevant data
       const newComment = new Comments({
-        user,
-        id,
-        file: fileData,
+        user: req.body.user,
+        id: req.body.id,
+        file: gltfFile.buffer, // Save the buffer directly
       });
   
-      // Save the comment object to the database
       await newComment.save();
   
-      // Return the saved comment back to the frontend (optional)
       res.json(newComment);
     } catch (error) {
       console.error("Error saving comment:", error);
       res.status(500).json({ error: "Failed to save the comment." });
     }
   });
+  
