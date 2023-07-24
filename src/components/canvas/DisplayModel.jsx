@@ -7,53 +7,10 @@ import CanvasLoader from './Loader';
 
 import { StlViewer } from "react-stl-viewer";
 
-
-const CoolObject = ({ makeResponsive, file }) => {
-    const style = {
-        top: 0,
-        left: 0,
-        width: '100vw',
-        height: '100vh',
-    }
-    
-    // useEffect(() => {
-    //     return () => URL.revokeObjectURL(gltfURL);
-    //   }, [gltfURL]);
-
-    return (
-    //     <mesh>
-    //     <hemisphereLight intensity={10} groundColor='black' />
-    //     <spotLight
-    //       position={[-200, 500, 100]}
-    //       angle={0.52}
-    //       penumbra={1}
-    //       intensity={10}
-    //       castShadow
-    //       shadow-mapSize={1024}
-    //     />
-    //     <pointLight intensity={10} />
-    //     <primitive
-    //       object={cool.scene}
-    //       scale={makeResponsive ? 0.7 : 0.5}
-    //       position={makeResponsive ? [0, -3, -2.2] : [0, -1, -1.5]}
-    //       rotation={[-0.1, -0, -0]}
-    //     />
-    //   </mesh>
-    <StlViewer
-            style={style}
-            orbitControls
-            shadows
-            url={file}
-        />
-      );
-  };
-
 const DisplayModel = ({file}) => {
     const style = {
-        top: 0,
-        left: 0,
-        width: '100vw',
-        height: '100vh',
+        width: '30vw',
+        height: '30vh',
     }
     const [small, setSmall] = useState(false);
 
@@ -75,29 +32,14 @@ const DisplayModel = ({file}) => {
       }, []);
     
       return (
-        // <Canvas
-        //   frameloop="demand"
-        //   shadows
-        //   dpr={[1, 2]}
-        //   camera={{ position: [50, 30, 5], fov: 25 }}
-        //   gl={{ preserveDrawingBuffer: true }}
-        // >
-        //   <Suspense fallback={<CanvasLoader/>}>
-        //     <OrbitControls
-        //       enableZoom={false}
-        //       maxPolarAngle={Math.PI / 2}
-        //       minPolarAngle={Math.PI / 2}
-        //     />
-        //     <CoolObject makeResponsive={small} file={file}/>
-        //   </Suspense>
-        //   <Preload all />
-        // </Canvas>
+        <div className="bg-primary rounded m-3">
         <StlViewer
             style={style}
             orbitControls
             shadows
             url={file}
         />
+        </div>
       );
 
 };
