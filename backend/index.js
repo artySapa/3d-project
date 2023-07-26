@@ -206,7 +206,7 @@ app.post("/comment/new", upload.single("file"), async (req, res) => {
     try {
       const newComment = new Comments({
         user: req.body.user,
-        id: req.body.id,
+        postId: req.body.postId,
         file: req.body.file, // Save the buffer directly
       });
   
@@ -227,5 +227,6 @@ app.post("/comment/new", upload.single("file"), async (req, res) => {
   })
 
   app.get('/all-comments', async (req, res) => {
-    res.json(Comments.find({}));
+    const allComments = await Comments.find({});
+    res.json(allComments);
   })

@@ -27,8 +27,8 @@ const ResponseDialog = ({ postId, setDialog, title, content }) => {
 
   const getComments = () => {
     axios
-      .get(local + "/all-comments")
-      .then((response) => {
+      .get(local + '/all-comments')
+      .then(async (response) => {
         const allComments = response.data;
         console.log(allComments);
         const relativeComments = allComments.filter((el) => {
@@ -36,10 +36,14 @@ const ResponseDialog = ({ postId, setDialog, title, content }) => {
             return el;
           }
         });
-        setComments(relativeComments);
+        await setComments(relativeComments);
       })
       .catch(console.error);
   };
+
+  useEffect(() => {
+    getComments();
+  }, []);
 
   const handleSubmit = async () => {
     if (base64) {
@@ -70,7 +74,6 @@ const ResponseDialog = ({ postId, setDialog, title, content }) => {
     try {
       const base64Data = await convertToBase64(e.target.files[0]);
       setBase64(base64Data);
-      console.log(base64Data); // Use base64Data instead of base64
     } catch (error) {
       console.error("Error converting file to Base64:", error);
     }

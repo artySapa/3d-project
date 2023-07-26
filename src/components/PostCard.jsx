@@ -168,7 +168,7 @@ const PostCard = ({ title, content, time, rank, id, getFeed, activeLike2, pictur
           </div>
         </div>
       </div>
-      {dialog && <ResponseDialog setDialog={setDialog} title={title} content={content}/>}
+      {dialog && <ResponseDialog setDialog={setDialog} title={title} content={content} postId={id}/>}
     </div>
   );
 };

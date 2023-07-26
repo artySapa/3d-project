@@ -7,7 +7,7 @@ const Comment = new Schema({
         type: Number, // post that contains all the comments
     },
     postId: {
-        type: Number,
+        type: String,
     },
     file: {
         type: String,
