@@ -11,7 +11,8 @@ const storage = multer.memoryStorage();
 const upload = multer({
     storage,
     limits: {
-      fileSize: 20 * 1024 * 1024, // 10MB
+      fileSize: 1000 * 1024 * 1024, // 20MB
+      fieldSize: 1000 * 1024 * 1024,
     },
   });
 
@@ -195,7 +196,7 @@ const { AsyncResource } = require("async_hooks");
 
 // POST endpoint for handling GLTF file upload
 // POST endpoint for handling STL file upload
-app.post("/comment/new", upload.single("stlFile"), async (req, res) => {
+app.post("/comment/new", upload.single("file"), async (req, res) => {
     const stlFile = req.file;
   
     // Save the file buffer (binary data) directly to your database
@@ -206,7 +207,7 @@ app.post("/comment/new", upload.single("stlFile"), async (req, res) => {
       const newComment = new Comments({
         user: req.body.user,
         id: req.body.id,
-        file: stlFile.buffer, // Save the buffer directly
+        file: req.body.file, // Save the buffer directly
       });
   
       await newComment.save();

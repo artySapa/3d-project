@@ -87,7 +87,6 @@ const Login = () => {
     try {
       if (profImageBase64) {
         const formData = new FormData();
-        console.log(profImageBase64);
         formData.append("username", username);
         formData.append("password", password);
         formData.append("picture", profImageBase64);
