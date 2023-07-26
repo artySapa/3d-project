@@ -190,10 +190,13 @@ app.post("/login", async (req, res) => {
 
 // POST COMMENTS
 const Comments = require("./models/Comments");
+const { accessSync } = require("fs");
+const { AsyncResource } = require("async_hooks");
 
 // POST endpoint for handling GLTF file upload
-app.post("/comment/new", upload.single("file"), async (req, res) => {
-    const gltfFile = req.file;
+// POST endpoint for handling STL file upload
+app.post("/comment/new", upload.single("stlFile"), async (req, res) => {
+    const stlFile = req.file;
   
     // Save the file buffer (binary data) directly to your database
     // Assuming you are using the 'Comments' model you defined for storing comments
@@ -203,7 +206,7 @@ app.post("/comment/new", upload.single("file"), async (req, res) => {
       const newComment = new Comments({
         user: req.body.user,
         id: req.body.id,
-        file: gltfFile.buffer, // Save the buffer directly
+        file: stlFile.buffer, // Save the buffer directly
       });
   
       await newComment.save();
@@ -215,3 +218,13 @@ app.post("/comment/new", upload.single("file"), async (req, res) => {
     }
   });
   
+  
+  app.get('/single-comment', async (req, res) => {
+    const Comments = require("./models/Comments");
+    const comment = Comments.findById(req.body.id);
+    res.json(comment);
+  })
+
+  app.get('/all-comments', async (req, res) => {
+    res.json(Comments.find({}));
+  })

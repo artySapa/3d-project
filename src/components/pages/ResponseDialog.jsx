@@ -2,34 +2,39 @@ import React, { useState } from "react";
 import axios from "axios";
 
 import DisplayModel from "../canvas/DisplayModel";
+import { useSelector } from "react-redux";
 
 const ResponseDialog = ({ postId, setDialog, title, content }) => {
   const [comment, setComment] = useState("");
   const [file, setFile] = useState(null);
   const [error, setError] = useState("");
 
-  const handleSubmit = async () => {
-    // Create a FormData object to send the file
-    const formData = new FormData();
-    formData.append("file", file);
+  const user = useSelector((state) => state.user);
 
+  const handleSubmit = async () => { // makes response 
+    // Create a FormData object to send the STL file
+    const formData = new FormData();
+    formData.append("stlFile", file); // Use "stlFile" key instead of "file"
+    formData.append('user', user.username);
+    formData.append('id', postId);
+  
     try {
-      // Make a POST request to upload the GLTF file to the backend
+      // Make a POST request to upload the STL file to the backend
       await axios.post("/comment/new", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-
+  
       // Reset form fields after successful submission
       setComment("");
       setFile(null);
     } catch (error) {
       // Handle any errors that occur during the upload process
-
       console.error("Error uploading file:", error);
     }
   };
+  
 
   const handleCommentChange = (e) => {
     setComment(e.target.value);

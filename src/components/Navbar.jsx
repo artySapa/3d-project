@@ -64,8 +64,8 @@ const Navbar = ({ setUser, profPic, setProfPic }) => {
             }}
           >
             <p className="text-white text-[18px] font-bold cursor-pointer flex">
-              Arty &nbsp;
-              <span className="sm:block hidden"> | 3D Project</span>
+              Share
+              <span className="sm:block hidden">3D</span>
             </p>
           </Link>
 
