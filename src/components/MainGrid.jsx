@@ -122,6 +122,7 @@ const MainGrid = () => {
                 getFeed={getFeed}
                 activeLike2={passLike}
                 picture={entry.picture}
+                userName={entry.user}
               />
             </div>
           );

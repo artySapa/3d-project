@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 import ResponseDialog from "./pages/ResponseDialog";
 
-const PostCard = ({ title, content, time, rank, id, getFeed, activeLike2, picture }) => {
+const PostCard = ({ title, content, time, rank, id, getFeed, activeLike2, picture, userName }) => {
   const [activeLike, setActiveLike] = useState(activeLike2);
   const [dialog, setDialog] = useState(false);
 
@@ -168,7 +168,7 @@ const PostCard = ({ title, content, time, rank, id, getFeed, activeLike2, pictur
           </div>
         </div>
       </div>
-      {dialog && <ResponseDialog setDialog={setDialog} title={title} content={content} postId={id}/>}
+      {dialog && <ResponseDialog setDialog={setDialog} title={title} content={content} postId={id} userName={userName}/>}
     </div>
   );
 };

@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const user = useSelector((state) => state.user);
-  console.log(user);
   const picture = user.picture;
 
   const navigateTo = useNavigate();
