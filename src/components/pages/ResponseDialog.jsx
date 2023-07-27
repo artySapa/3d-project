@@ -42,12 +42,12 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
   };
 
   const handleSubmit = async () => {
-    if (base64) {
+    if (file) {
       const formData = new FormData();
-      formData.append("file", base64);
+      formData.append("file", file);
       formData.append("user", user.username);
       formData.append("postId", postId);
-  
+
       try {
         setLoading(true);
         const response = await axios.post(local + "/comment/new", formData);
