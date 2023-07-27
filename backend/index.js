@@ -227,6 +227,7 @@ app.post("/comment/new", upload.single("file"), async (req, res) => {
   })
 
   app.get('/all-comments', async (req, res) => {
+    const Comments = require("./models/Comments");
     const allComments = await Comments.find({});
     res.json(allComments);
   })

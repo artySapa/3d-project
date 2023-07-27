@@ -31,23 +31,15 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
       .get(local + "/all-comments")
       .then(async (response) => {
         const allComments = response.data;
+        console.log("all comments", allComments);
         const relativeComments = allComments.filter(
           (el) => el.postId === postId
         );
-        await setComments(relativeComments);
+        console.log('relative', relativeComments);
+        setComments(relativeComments);
       })
-      .catch(console.error);
+      .catch((error) => console.log("ERROR", error));
   };
-
-  useEffect(() => {
-    getComments();
-  }, []);
-  useEffect(() => {
-    getComments();
-  }, [comment]);
-  //   useEffect(() => {
-  //     console.log(comments);
-  //   }, [comments]);
 
   const handleSubmit = async () => {
     if (base64) {
@@ -55,20 +47,22 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
       formData.append("file", base64);
       formData.append("user", user.username);
       formData.append("postId", postId);
-
+  
       try {
         setLoading(true);
         const response = await axios.post(local + "/comment/new", formData);
-        setLoading(false);
+        console.log(response);
         setComment("");
         setFile(null);
         getComments();
       } catch (error) {
         console.error("Error uploading file:", error);
+      } finally {
+        setLoading(false);
       }
     }
   };
-
+  
   const handleCommentChange = (e) => {
     setComment(e.target.value);
   };
