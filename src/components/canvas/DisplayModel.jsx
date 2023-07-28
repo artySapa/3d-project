@@ -3,10 +3,10 @@ import React, { Suspense, useEffect, useState } from "react";
 import { StlViewer } from "react-stl-viewer";
 
 const DisplayModel = ({ file }) => {
-  const style = {
-    width: "30vw",
-    height: "30vh",
-  };
+    const style = {
+        width: "500px",
+        height: "200px",
+      };
   const [small, setSmall] = useState(false);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const DisplayModel = ({ file }) => {
   }, []);
 
   return (
-    <div className="bg-primary rounded w-[50%]">
+    <div className="bg-primary rounded w-[50%] flex justify-start overflow-hidden">
         <StlViewer style={style} orbitControls shadows url={file} />
     </div>
   );

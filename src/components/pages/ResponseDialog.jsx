@@ -78,12 +78,12 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
   };
 
   useEffect(()=>{
-    getComments()
+    getComments();
   },[]);
 
   return (
     <div className="fixed inset-0 bg-primary bg-opacity-80 backdrop-blur-sm flex justify-center items-center z-50 text-black">
-      <div className="bg-main rounded shadow-lg p-[50px]">
+      <div className="bg-main rounded shadow-lg p-[50px] max-h-[80vh] overflow-y-auto">
         <div className="justify-end flex">
           <button
             onClick={() => {
