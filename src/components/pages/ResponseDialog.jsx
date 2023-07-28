@@ -42,12 +42,12 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
   };
 
   const handleSubmit = async () => {
-    if (file) {
+    if (base64) {
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", base64);
       formData.append("user", user.username);
       formData.append("postId", postId);
-
+  
       try {
         setLoading(true);
         const response = await axios.post(local + "/comment/new", formData);
@@ -76,6 +76,10 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
       console.error("Error converting file to Base64:", error);
     }
   };
+
+  useEffect(()=>{
+    getComments()
+  },[]);
 
   return (
     <div className="fixed inset-0 bg-primary bg-opacity-80 backdrop-blur-sm flex justify-center items-center z-50 text-black">
@@ -118,8 +122,10 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
             console.log(comment);
             return (
               <div className="message">
-                <p className="sender">{comment.user}</p>
+                <p className="flex justify-end">{comment.user}</p>
+                <div className="flex justify-end" >
                 <DisplayModel file={comment.file}></DisplayModel>
+                </div>
               </div>
             );
           })}

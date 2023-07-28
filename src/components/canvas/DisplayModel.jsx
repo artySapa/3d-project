@@ -27,7 +27,7 @@ const DisplayModel = ({ file }) => {
   }, []);
 
   return (
-    <div className="bg-primary rounded m-3">
+    <div className="bg-primary rounded w-[50%]">
         <StlViewer style={style} orbitControls shadows url={file} />
     </div>
   );

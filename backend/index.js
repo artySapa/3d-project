@@ -207,7 +207,7 @@ app.post("/comment/new", upload.single("file"), async (req, res) => {
       const newComment = new Comments({
         user: req.body.user,
         postId: req.body.postId,
-        file: req.file.buffer, // Save the buffer directly
+        file: req.body.file, // Save the buffer directly
       });
   
       await newComment.save();
@@ -219,17 +219,15 @@ app.post("/comment/new", upload.single("file"), async (req, res) => {
     }
   });
   
-  app.get("/all-comments", async (req, res) => {
+  
+  app.get('/single-comment', async (req, res) => {
+    const Comments = require("./models/Comments");
+    const comment = Comments.findById(req.body.id);
+    res.json(comment);
+  })
+
+  app.get('/all-comments', async (req, res) => {
     const Comments = require("./models/Comments");
     const allComments = await Comments.find({});
-  
-    // Modify the comments to include the file buffer directly
-    const commentsWithFile = allComments.map((comment) => ({
-      _id: comment._id,
-      user: comment.user,
-      postId: comment.postId,
-      file: comment.file.buffer.toString("base64"), // Convert buffer to base64
-    }));
-  
-    res.json(commentsWithFile);
-  });
+    res.json(allComments);
+  })
