@@ -14,6 +14,9 @@ const Comment = new Schema({
     },
     user: {
         type: String,
+    },
+    comment: { 
+        type: String,
     }
 })
 

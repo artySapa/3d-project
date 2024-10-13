@@ -11,9 +11,9 @@ const storage = multer.memoryStorage();
 const upload = multer({
     storage,
     limits: {
-      fileSize: 1000 * 1024 * 1024, // 20MB
-      fieldSize: 2000 * 1024 * 1024,
-      offset: 2000 * 1024 * 1024,
+      fileSize: 20000 * 1024 * 1024, // 20MB
+      fieldSize: 20000 * 1024 * 1024,
+      offset: 20000 * 1024 * 1024,
     },
   });
 
@@ -209,6 +209,7 @@ app.post("/comment/new", upload.single("file"), async (req, res) => {
         user: req.body.user,
         postId: req.body.postId,
         file: req.body.file, // Save the buffer directly
+        comment: req.body.comment,
       });
   
       await newComment.save();
