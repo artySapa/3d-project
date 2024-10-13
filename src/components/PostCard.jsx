@@ -78,7 +78,7 @@ const PostCard = ({ title, content, time, rank, id, getFeed, activeLike2, pictur
 
 
   return (
-    <div className="flex bg-white shadow-lg rounded-lg md:mx-auto my-12 justify-center md:max-w-xl">
+    <div className="flex bg-white shadow-lg rounded-lg md:mx-auto justify-center md:max-w-xl">
       <div className="flex items-start px-4 py-6 ">
         <img
           className="w-[110px] h-[110px] rounded-full object-cover mr-4 shadow"
@@ -114,7 +114,7 @@ const PostCard = ({ title, content, time, rank, id, getFeed, activeLike2, pictur
             </button>
           </div>
           <p className="text-gray-700">{time} </p>
-          <p className="mt-3 text-gray-700 text-sm max-w-xs max-h-[100%] truncate whitespace-normal">
+          <p className="mt-3 text-gray-700 text-sm max-w-xs truncate whitespace-nowrap overflow-hidden">
             {content}
           </p>
           <div className="mt-4 flex justify-between hover:text-[#FF5733]">
@@ -163,7 +163,7 @@ const PostCard = ({ title, content, time, rank, id, getFeed, activeLike2, pictur
                   d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                 />
               </svg>
-              <button className="hover:text-[#FF5733]" onClick={() => {if(user != ""){setDialog(true)}else{alert("You are not logged in!")}}}>Chat</button>
+              <button className="hover:text-[#FF5733]" onClick={() => {setDialog(true)}}>Chat</button>
             </div>
           </div>
         </div>

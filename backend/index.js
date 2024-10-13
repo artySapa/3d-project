@@ -1,3 +1,4 @@
+require('dotenv').config(); // Load environment variables from .env
 const { useSelector } = require("react-redux");
 
 const mongoose = require("mongoose");
@@ -17,7 +18,8 @@ const upload = multer({
     },
   });
 
-connection = "mongodb+srv://artemsapa:resq@cluster0.ghnh3mq.mongodb.net/";
+const PORT = process.env.PORT || 8080;
+const connection = process.env.MONGO_URI;
 
 mongoose.set("strictQuery", false);
 
@@ -37,7 +39,7 @@ app.use(express.json({ limit: "20mb" }));
 app.use(express.json());
 app.use(cors());
 
-app.listen(8080, () => console.log("Server listening on port 8080"));
+app.listen(PORT, () => console.log("Server listening"));
 
 // =============== Three Objects set up =============================
 const ThreeEntries = require("./models/ThreeObject");

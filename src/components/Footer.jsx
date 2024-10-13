@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Footer(props) {
   return (
-    <div className="footer bg-main bottom-0 w-full flex justify-around mt-[10%] p-5">
+    <div className="footer bg-main bottom-0 w-full flex justify-around p-5">
       <div className="footerEntry flex flex-row justify-end">
         <p className="footerLink">
           <a
@@ -36,13 +36,6 @@ export default function Footer(props) {
         </p>
         <p className="footerLink text-black mr-20">sapartyom@g.ucla.edu</p>
         <p className="footerLink text-black mr-20">(424)415-2827</p>
-        <a
-          className="footerLink text-black"
-          href="./artycv.pdf"
-          download="Arty artycv.pdf"
-        >
-          Resume
-        </a>
       </div>
     </div>
   );
