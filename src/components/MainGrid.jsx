@@ -4,7 +4,7 @@ import PostCard from "./PostCard";
 import { useSelector } from "react-redux";
 
 const MainGrid = () => {
-  const URL = "http://localhost:8080";
+  const URL = "https://3d-project-backend.vercel.app";
 
   const [entries, setEntries] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility

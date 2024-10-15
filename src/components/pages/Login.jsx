@@ -13,7 +13,7 @@ import { useEffect } from "react";
 const Login = () => {
   const dispatch = useDispatch();
 
-  const URL = "http://localhost:8080";
+  const URL = "https://3d-project-backend.vercel.app";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");

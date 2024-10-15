@@ -15,7 +15,7 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
 
   const user = useSelector((state) => state.user);
 
-  const local = "http://localhost:8080";
+  const local = "https://3d-project-backend.vercel.app";
 
   const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {

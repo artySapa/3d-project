@@ -9,7 +9,7 @@ const PostCard = ({ title, content, time, rank, id, getFeed, activeLike2, pictur
   const [activeLike, setActiveLike] = useState(activeLike2);
   const [dialog, setDialog] = useState(false);
 
-  const URL = "http://localhost:8080";
+  const URL = "https://3d-project-backend.vercel.app";
 
   const userObject = useSelector((state) => state.user);
 
