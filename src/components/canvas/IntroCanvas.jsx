@@ -7,36 +7,63 @@ import CanvasLoader from './Loader';
 const CoolObject = ({ makeResponsive }) => {
   const cooler = useGLTF('./vending/scene.gltf');
 
+  // Adjust scaling based on screen size dynamically
+  const [scale, setScale] = useState(0.7);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const screenWidth = window.innerWidth;
+      
+      if (screenWidth < 500) {
+        setScale(0.45); // Smaller scale for mobile screens
+      } else if (screenWidth > 1200) {
+        setScale(0.6); // Limit the scale for very large screens
+      } else {
+        setScale(0.55); // Default scale for medium screens
+      }
+    };
+
+    // Add event listener for resizing
+    window.addEventListener('resize', handleResize);
+
+    // Call it initially to set the correct scale on load
+    handleResize();
+
+    // Clean up the event listener on component unmount
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <mesh>
-    <hemisphereLight intensity={10} groundColor='black' />
-    <spotLight
-      position={[-200, 500, 100]}
-      angle={0.52}
-      penumbra={1}
-      intensity={10}
-      castShadow
-      shadow-mapSize={1024}
-    />
-    <pointLight intensity={10} />
-    <primitive
-      object={cooler.scene}
-      scale={makeResponsive ? 0.7 : 0.5}
-      position={makeResponsive ? [0, -3, -2.2] : [0, -1, -1.5]}
-      rotation={[-0.1, -0, -0]}
-    />
-  </mesh>
+      <hemisphereLight intensity={10} groundColor='black' />
+      <spotLight
+        position={[-200, 500, 100]}
+        angle={0.52}
+        penumbra={1}
+        intensity={10}
+        castShadow
+        shadow-mapSize={1024}
+      />
+      <pointLight intensity={10} />
+      <primitive
+        object={cooler.scene}
+        scale={scale} // Dynamically adjusted scale
+        position={makeResponsive ? [0, -2.5, -1.5] : [0, -3, -2.2]} // Adjust the position as needed
+        rotation={[-0.1, 0, 0]}
+      />
+    </mesh>
   );
 };
+
 
 const IntroCanvas = () => {
   const [small, setSmall] = useState(false);
 
   useEffect(() => {
     // Add a listener for changes to the screen size
-    const mediaQuery = window.matchMedia("(max-width: 500px)");
+    const mediaQuery = window.matchMedia("(max-width: 768px)"); // Consider tablets as well
 
-    // Set the initial value of the `isMobile` state variable
+    // Set the initial value of the `small` state variable
     setSmall(mediaQuery.matches);
 
     // Define a callback function to handle changes to the media query
@@ -61,7 +88,7 @@ const IntroCanvas = () => {
       camera={{ position: [50, 30, 5], fov: 25 }}
       gl={{ preserveDrawingBuffer: true }}
     >
-      <Suspense fallback={<CanvasLoader/>}>
+      <Suspense fallback={<CanvasLoader />}>
         <OrbitControls
           enableZoom={false}
           maxPolarAngle={Math.PI / 2}
@@ -73,5 +100,6 @@ const IntroCanvas = () => {
     </Canvas>
   );
 };
+
 
 export default IntroCanvas;

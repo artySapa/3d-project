@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
 
 const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
-  const fileInputRef = useRef(null); // Create a ref for the file input
+  const fileInputRef = useRef(null);
   const [comment, setComment] = useState("");
   const [file, setFile] = useState(null);
   const [base64, setBase64] = useState("");
@@ -53,7 +53,7 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
         await axios.post(local + "/comment/new", formData);
         setComment("");
         if (fileInputRef.current) {
-          fileInputRef.current.value = null; // Reset file input to null
+          fileInputRef.current.value = null;
         }
         setFile(null);
         setBase64("");
@@ -113,7 +113,7 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
         </div>
 
         {/* Comments Section */}
-        <div className="flex-grow overflow-y-auto p-[20px]">
+        <div className="flex-grow p-[20px] overflow-y-auto h-[400px]">
           <div className="message mb-4">
             <p className="sender">{userName}:</p>
             <div className="bg-gray-300 rounded-lg p-4">
@@ -147,7 +147,7 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
             <>
               {comments.map((comment, index) => (
                 <div
-                  className="message mb-6 p-4 bg-white shadow-lg rounded-lg border border-gray-300"
+                  className="message mb-6 p-4 bg-white shadow-lg rounded-lg border border-gray-300 w-full"
                   key={index}
                 >
                   <div className="flex justify-between items-center mb-2">
@@ -182,7 +182,7 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
         {user.username && (
           <div className="p-[20px] border-t flex flex-col">
             <textarea
-              className="w-full p-3 mb-3 border border-gray-300  text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3 mb-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your comment..."
               value={comment}
               onChange={handleCommentChange}
@@ -191,7 +191,7 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
               type="file"
               onChange={handleFileChange}
               className="mb-3"
-              ref={fileInputRef} 
+              ref={fileInputRef}
             />
             {error && <p className="text-red-500 text-sm">{error}</p>}
             {file && <DisplayModel file={file} />}

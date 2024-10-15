@@ -52,7 +52,7 @@ const MainGrid = () => {
         await setEntries(response.data.reverse());
         setLoading(false);
       })
-      .catch(console.error)
+      .catch(console.error);
   };
 
   useEffect(() => {
@@ -60,12 +60,14 @@ const MainGrid = () => {
   }, []);
 
   return (
-    <div className="flex-column m-[auto] align-center min-h-screen">
-      <h2 className="text-5xl w-[50%] ml-[5%] font-bold mt-20">POSTS</h2>
+    <div className="flex flex-col m-auto items-center min-h-screen">
+      <h2 className="text-4xl w-11/12 font-bold mt-20 text-center md:text-left">
+        POSTS
+      </h2>
       {/* Improved "Create a New Post" Button */}
-      <div className="flex justify-center mb-12">
+      <div className="flex justify-center mb-12 w-full">
         <button
-          className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-4 rounded-full shadow-lg hover:shadow-2xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 text-lg font-semibold"
+          className="bg-gradient-to-r from-blue-500 mt-4 to-indigo-600 text-white px-8 py-4 rounded-full shadow-lg hover:shadow-2xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 text-lg font-semibold"
           onClick={() => {
             if (!user.username) {
               alert("Please log in first!");
@@ -81,7 +83,7 @@ const MainGrid = () => {
       {/* Modal for creating a post */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-8 rounded-lg shadow-lg w-[90%] max-w-[600px]">
+          <div className="bg-white p-8 rounded-lg shadow-lg w-11/12 max-w-lg">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-semibold">Create a Request</h2>
               <button
@@ -161,7 +163,7 @@ const MainGrid = () => {
         </div>
       ) : (
         // Post Grid
-        <div className="inline-grid gap-4 ml-[5%] mt-5 mb-5 grid-cols-3 w-[90%] mt-8">
+        <div className="grid gap-4 mt-5 mb-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full px-4">
           {entries.map((entry, index) => {
             const timestamp = new Date(entry.timestamp);
             const formattedDate = timestamp.toLocaleDateString();
