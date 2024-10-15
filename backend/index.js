@@ -1,5 +1,4 @@
 require('dotenv').config(); // Load environment variables from .env
-const { useSelector } = require("react-redux");
 
 const mongoose = require("mongoose");
 const cors = require("cors");
