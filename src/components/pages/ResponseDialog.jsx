@@ -86,16 +86,16 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
 
   return (
     <div className="fixed inset-0 bg-primary bg-opacity-80 backdrop-blur-sm flex justify-center items-center z-50 text-black">
-      <div className="bg-main rounded shadow-lg w-[600px] h-[700px] flex flex-col">
+      <div className="bg-main rounded shadow-lg w-full max-w-[90%] md:max-w-[600px] h-[90%] md:h-[700px] flex flex-col">
         {/* Header */}
-        <div className="p-[20px] flex justify-between items-center border-b">
-          <h2 className="text-2xl font-semibold">{title}</h2>
+        <div className="p-4 md:p-[20px] flex justify-between items-center border-b">
+          <h2 className="text-lg md:text-2xl font-semibold">{title}</h2>
           <button
             onClick={() => setDialog(false)}
             className="text-black hover:text-red-500"
           >
             <svg
-              className="h-7 w-7"
+              className="h-6 w-6 md:h-7 md:w-7"
               width="24"
               height="24"
               viewBox="0 0 24 24"
@@ -113,11 +113,11 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
         </div>
 
         {/* Comments Section */}
-        <div className="flex-grow p-[20px] overflow-y-auto h-[400px]">
+        <div className="flex-grow p-4 md:p-[20px] overflow-y-auto">
           <div className="message mb-4">
             <p className="sender">{userName}:</p>
-            <div className="bg-gray-300 rounded-lg p-4">
-              <p className="text-xl font-semibold mb-4">{content}</p>
+            <div className="bg-gray-300 rounded-lg p-2 md:p-4">
+              <p className="text-sm md:text-xl font-semibold mb-4">{content}</p>
             </div>
           </div>
 
@@ -126,7 +126,7 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
               <div role="status">
                 <svg
                   aria-hidden="true"
-                  className="w-8 h-8 m-auto text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                  className="w-6 h-6 md:w-8 md:h-8 m-auto text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
                   viewBox="0 0 100 101"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -147,11 +147,11 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
             <>
               {comments.map((comment, index) => (
                 <div
-                  className="message mb-6 p-4 bg-white shadow-lg rounded-lg border border-gray-300 w-full"
+                  className="message mb-4 p-2 md:p-4 bg-white shadow-lg rounded-lg border border-gray-300 w-full"
                   key={index}
                 >
                   <div className="flex justify-between items-center mb-2">
-                    <p className="text-lg font-semibold text-gray-700">
+                    <p className="text-sm md:text-lg font-semibold text-gray-700">
                       {comment.user}
                     </p>
                     {comment.file && (
@@ -164,7 +164,7 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
                       </a>
                     )}
                   </div>
-                  <div className="bg-gray-100 p-4 rounded-md mb-4">
+                  <div className="bg-gray-100 p-2 md:p-4 rounded-md mb-4">
                     {comment.comment}
                   </div>
                   {comment.file && (
@@ -180,9 +180,9 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
 
         {/* Comment Input Section */}
         {user.username && (
-          <div className="p-[20px] border-t flex flex-col">
+          <div className="p-4 md:p-[20px] border-t flex flex-col fixed bottom-0 left-0 right-0 bg-main max-w-[90%] md:max-w-[600px] mx-auto">
             <textarea
-              className="w-full p-3 mb-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 md:p-3 mb-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your comment..."
               value={comment}
               onChange={handleCommentChange}
@@ -197,13 +197,13 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
             {file && <DisplayModel file={file} />}
             <div className="flex justify-end">
               <button
-                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+                className="px-3 py-2 md:px-4 md:py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
                 onClick={handleSubmit}
               >
                 Submit
               </button>
               <button
-                className="px-4 py-2 ml-4 bg-gray-300 rounded hover:bg-gray-400 transition"
+                className="px-3 py-2 md:px-4 md:py-2 ml-2 md:ml-4 bg-gray-300 rounded hover:bg-gray-400 transition"
                 onClick={() => setDialog(false)}
               >
                 Cancel
