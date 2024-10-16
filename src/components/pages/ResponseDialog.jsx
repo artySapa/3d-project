@@ -180,7 +180,7 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
 
         {/* Comment Input Section */}
         {user.username && (
-          <div className="p-4 md:p-[20px] border-t flex flex-col fixed bottom-0 left-0 right-0 bg-main max-w-[90%] md:max-w-[600px] mx-auto">
+          <div className="p-4 md:p-[20px] border-t flex text-white flex-col fixed bottom-0 left-0 right-0 bg-main max-w-[90%] md:max-w-[600px] mx-auto">
             <textarea
               className="w-full p-2 md:p-3 mb-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your comment..."
