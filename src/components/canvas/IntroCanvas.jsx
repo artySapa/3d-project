@@ -1,14 +1,14 @@
-import React, { Suspense, useEffect, useState } from "react";
-import { Canvas } from "@react-three/fiber";
+import React, { Suspense, useEffect, useState, useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
 
 import CanvasLoader from './Loader';
+import CanvasOverlay from "./CanvasOverlay";
 
 const CoolObject = ({ makeResponsive }) => {
   const cooler = useGLTF('./vending/scene.gltf');
-
-  // Adjust scaling based on screen size dynamically
   const [scale, setScale] = useState(0.7);
+  const coolerRef = useRef();
 
   useEffect(() => {
     const handleResize = () => {
@@ -23,15 +23,17 @@ const CoolObject = ({ makeResponsive }) => {
       }
     };
 
-    // Add event listener for resizing
     window.addEventListener('resize', handleResize);
-
-    // Call it initially to set the correct scale on load
-    handleResize();
-
-    // Clean up the event listener on component unmount
+    handleResize(); // Set initial scale
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Rotate the object on every frame
+  useFrame(() => {
+    if (coolerRef.current) {
+      coolerRef.current.rotation.y -= 0.002; // Adjust rotation speed
+    }
+  });
 
   return (
     <mesh>
@@ -46,47 +48,50 @@ const CoolObject = ({ makeResponsive }) => {
       />
       <pointLight intensity={10} />
       <primitive
+        ref={coolerRef}
         object={cooler.scene}
-        scale={scale} // Dynamically adjusted scale
-        position={makeResponsive ? [0, -2.5, -1.5] : [0, -3, -2.2]} // Adjust the position as needed
+        scale={scale}
+        position={makeResponsive ? [0, -2.5, -1.5] : [0, -3, -2.2]}
         rotation={[-0.1, 0, 0]}
       />
     </mesh>
   );
 };
 
-
 const IntroCanvas = () => {
   const [small, setSmall] = useState(false);
+  const [interacted, setInteracted] = useState(false);
 
   useEffect(() => {
-    // Add a listener for changes to the screen size
-    const mediaQuery = window.matchMedia("(max-width: 768px)"); // Consider tablets as well
-
-    // Set the initial value of the `small` state variable
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
     setSmall(mediaQuery.matches);
 
-    // Define a callback function to handle changes to the media query
     const handleMediaQueryChange = (event) => {
       setSmall(event.matches);
     };
 
-    // Add the callback function as a listener for changes to the media query
     mediaQuery.addEventListener("change", handleMediaQueryChange);
-
-    // Remove the listener when the component is unmounted
     return () => {
       mediaQuery.removeEventListener("change", handleMediaQueryChange);
     };
   }, []);
 
+  const handleUserInteraction = () => {
+    setInteracted(!interacted);
+  };
+
   return (
+    <div className="flex flex-col items-center relative w-full">
     <Canvas
-      frameloop="demand"
+    style={{ cursor: 'grab' }}
       shadows
       dpr={[1, 2]}
       camera={{ position: [50, 30, 5], fov: 25 }}
       gl={{ preserveDrawingBuffer: true }}
+      onPointerDown={handleUserInteraction}
+        onWheel={handleUserInteraction}
+        
+        onTouchStart={handleUserInteraction}
     >
       <Suspense fallback={<CanvasLoader />}>
         <OrbitControls
@@ -98,8 +103,9 @@ const IntroCanvas = () => {
       </Suspense>
       <Preload all />
     </Canvas>
+    <CanvasOverlay onInteract={interacted}/>
+    </div>
   );
 };
-
 
 export default IntroCanvas;
