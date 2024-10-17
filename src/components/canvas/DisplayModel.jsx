@@ -28,7 +28,7 @@ const DisplayModel = ({ file }) => {
 
   return (
     <div className="bg-primary rounded w-[50%] flex justify-start overflow-hidden">
-        <StlViewer style={style} orbitControls shadows url={file} />
+        <StlViewer style={style} showAxes orbitControls shadows url={file} />
     </div>
   );
 };

@@ -12,6 +12,7 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
   const [error, setError] = useState("");
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showDragIndicator, setShowDragIndicator] = useState(true); // State for drag indicator
 
   const user = useSelector((state) => state.user);
 
@@ -80,13 +81,17 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
     }
   };
 
+  const handleModelInteraction = () => {
+    setShowDragIndicator(false); // Hide the drag indicator when user interacts
+  };
+
   useEffect(() => {
     getComments();
   }, []);
 
   return (
     <div className="fixed inset-0 bg-primary bg-opacity-80 backdrop-blur-sm flex justify-center items-center z-50 text-black">
-      <div className="bg-main rounded shadow-lg w-full max-w-[90%] md:max-w-[600px] h-[90%] md:h-[700px] flex flex-col">
+      <div className="bg-main rounded shadow-lg w-full max-w-[90%] md:max-w-[800px] h-[90%] md:h-[900px] flex flex-col">
         {/* Header */}
         <div className="p-4 md:p-[20px] flex justify-between items-center border-b">
           <h2 className="text-lg md:text-2xl font-semibold">{title}</h2>
@@ -168,8 +173,17 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
                     {comment.comment}
                   </div>
                   {comment.file && (
-                    <div className="flex justify-center">
-                      <DisplayModel file={comment.file} />
+                    <div className="flex justify-center relative">
+                      {showDragIndicator && (
+                        <div className="absolute top-2 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-2 py-1 rounded text-xs opacity-50">
+                          Drag to rotate
+                        </div>
+                      )}
+                      <DisplayModel
+                        file={comment.file}
+                        onMouseDown={handleModelInteraction}
+                        onTouchStart={handleModelInteraction}
+                      />
                     </div>
                   )}
                 </div>
