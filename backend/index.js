@@ -48,7 +48,7 @@ app.listen(PORT, () => console.log("Server listening"));
 const ThreeEntries = require("./models/ThreeObject");
 
 app.get("/entries", async (req, res) => {
-  const allEntries = await ThreeEntries.find({});
+  const allEntries = await ThreeEntries.find({}).lean();
   res.json(allEntries);
 });
 
