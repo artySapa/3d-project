@@ -6,7 +6,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 
 const path = require("path");
-
+ // mongodb+srv://artemsapa:resq@cluster0.ghnh3mq.mongodb.net/
 const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({
@@ -230,6 +230,6 @@ app.post("/comment/new", upload.single("file"), async (req, res) => {
 
   app.get('/all-comments', async (req, res) => {
     const Comments = require("./models/Comments");
-    const allComments = await Comments.find({});
+    const allComments = await Comments.find({}).lean();
     res.json(allComments);
   })
