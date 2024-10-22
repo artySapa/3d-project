@@ -3,6 +3,7 @@ require('dotenv').config(); // Load environment variables from .env
 const mongoose = require("mongoose");
 const cors = require("cors");
 const express = require("express");
+const bcrypt = require("bcrypt");
 
 const path = require("path");
 
@@ -142,9 +143,12 @@ app.post("/users/new", upload.single("picture"), async (req, res) => {
     return;
   }
 
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+
   const user = new User({
     username: req.body.username,
-    password: req.body.password,
+    password: hashedPassword,
     picture: req.body.picture,
   });
 
@@ -182,8 +186,8 @@ app.post("/login", async (req, res) => {
     res.json({ error: "That username doesn't exist" });
     return;
   }
-
-  if (user.password === req.body.password) {
+  const match = await bcrypt.compare(req.body.password, user.password);
+  if (match) {
     res.json(user);
   } else {
     res.json({ error: "Incorrect password" });
