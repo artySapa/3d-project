@@ -15,8 +15,3 @@ p {
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
-
-/* Prevent body scrolling */
-.no-scroll {
-  overflow: hidden;
-}

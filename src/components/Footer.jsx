@@ -13,7 +13,14 @@ export default function Footer(props) {
           >
             <i className="fa fa-instagram"></i>
           </a>
-          <span className="block md:hidden text-black">Instagram</span>
+          <span className="block md:hidden text-black"><a
+            href="https://www.instagram.com/sapartyom/"
+            target="_blank"
+            rel="noreferrer"
+            className="text-black"
+          >
+            Instagram
+          </a></span>
         </p>
         <p className="footerLink flex items-center space-x-2">
           <a
@@ -24,7 +31,14 @@ export default function Footer(props) {
           >
             <i className="fa fa-github"></i>
           </a>
-          <span className="block md:hidden text-black">GitHub</span>
+          <span className="block md:hidden text-black"><a
+            href="https://github.com/artySapa"
+            target="_blank"
+            rel="noreferrer"
+            className="text-black"
+          >
+           GitHub 
+          </a></span>
         </p>
         <p className="footerLink flex items-center space-x-2">
           <a
@@ -35,7 +49,14 @@ export default function Footer(props) {
           >
             <i className="fa fa-linkedin"></i>
           </a>
-          <span className="block md:hidden text-black">LinkedIn</span>
+          <span className="block md:hidden text-black"><a
+            href="https://www.linkedin.com/in/sapartyom/"
+            target="_blank"
+            rel="noreferrer"
+            className="text-black"
+          >
+            LinkedIn
+          </a></span>
         </p>
         <p className="footerLink text-black md:mr-20">sapartyom@g.ucla.edu</p>
         <p className="footerLink text-black md:mr-20">(424) 415-2827</p>
