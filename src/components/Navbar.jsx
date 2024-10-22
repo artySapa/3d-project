@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Login from "./pages/Login";
 import Welcome from "./Welcome";
@@ -27,7 +27,7 @@ const Navbar = () => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShowDropdown(false);
+        setShowDropdown(false); // Close the dropdown if clicked outside
       }
     };
 
@@ -40,7 +40,7 @@ const Navbar = () => {
 
   return (
     <Router>
-      <nav className="w-full flex items-center py-5 fixed top-0 z-50 bg-slate-900">
+      <nav className="w-full flex items-center py-5 fixed top-0 z-10 bg-slate-900">
         <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
           {/* Logo */}
           <Link
@@ -56,7 +56,7 @@ const Navbar = () => {
             </p>
           </Link>
 
-          {/* Navigation Menu (visible on all screen sizes) */}
+          {/* Navigation Menu */}
           <ul className="list-none flex flex-row sm:flex-row gap-4 sm:gap-10">
             {links.map((nav) => (
               <li
@@ -64,17 +64,18 @@ const Navbar = () => {
                 className={`${
                   active === nav.title ? "text-white" : "text-secondary"
                 } hover:text-white text-[18px] font-medium cursor-pointer`}
-                onMouseEnter={
-                  nav.title === "log in" && user.username !== ""
-                    ? () => setShowDropdown(true)
-                    : null
-                }
               >
                 {nav.title === "log in" && user.username === "" && (
                   <Link to="/login">{nav.title}</Link>
                 )}
+
+                {/* Profile Picture with Dropdown */}
                 {nav.title === "log in" && user.username !== "" && (
-                  <div className="relative">
+                  <div
+                    className="relative flex"
+                    onMouseEnter={() => {setShowDropdown(false)}}
+                    onMouseLeave={() => setShowDropdown(false)}
+                  >
                     <Link to="/profile">
                       <img
                         className="w-[30px] h-[30px] rounded-full object-cover mr-4 shadow"
@@ -82,9 +83,11 @@ const Navbar = () => {
                         alt="profile-pic"
                       />
                     </Link>
+
+                    {/* Dropdown Menu */}
                     {showDropdown && (
                       <div
-                        className="absolute top-[40px] right-0 bg-white p-2 shadow rounded-md z-30"
+                        className="absolute mt-2 top-[40px] right-0 bg-white p-2 shadow rounded-md z-50"
                         ref={dropdownRef}
                       >
                         <Link
@@ -102,8 +105,15 @@ const Navbar = () => {
                         </button>
                       </div>
                     )}
+                    <button
+                        onClick={handleLogout}
+                        className="hover:opacity-70 transition-opacity duration-200"
+                      >
+                        <svg class="h-8 w-8 text-red-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <line x1="20" y1="12" x2="10" y2="12" />  <line x1="20" y1="12" x2="16" y2="16" />  <line x1="20" y1="12" x2="16" y2="8" />  <line x1="4" y1="4" x2="4" y2="20" /></svg>
+                      </button>
                   </div>
                 )}
+
                 {nav.title !== "log in" && nav.title !== "profile" && (
                   <Link to="/">{nav.title}</Link>
                 )}

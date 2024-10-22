@@ -122,7 +122,7 @@ const PostCard = ({
             {time}
           </p>
           <p
-            className="mt-2 text-gray-700 text-sm overflow-hidden text-ellipsis max-h-16 line-clamp-3"
+            className="mt-2 text-gray-700 text-sm overflow-hidden text-ellipsis max-h-16 line-clamp-1"
           >
             {content}
           </p>
