@@ -36,8 +36,20 @@ const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json({ limit: "20mb" }));
 
+// Configure CORS to allow requests from your frontend
+const allowedOrigins = ['https://3d-project-sable.vercel.app'];
+
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
+
 
 app.listen(PORT, () => console.log("Server listening"));
 
