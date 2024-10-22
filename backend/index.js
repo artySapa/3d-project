@@ -23,11 +23,12 @@ const connection = process.env.MONGO_URI;
 
 mongoose.set("strictQuery", false);
 
-mongoose
-  .connect(connection, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+mongoose.connect(connection, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  maxPoolSize: 50, // Increase to handle more connections
+  socketTimeoutMS: 300000, // Set a higher timeout to avoid disconnection
+})
   .then(() => console.log("connected to the DB"))
   .catch((error) => {
     console.error("Error connecting to the database: ", error);
@@ -199,18 +200,10 @@ app.post("/login", async (req, res) => {
 
 // POST COMMENTS
 const Comments = require("./models/Comments");
-const { accessSync } = require("fs");
-const { AsyncResource } = require("async_hooks");
 
 // POST endpoint for handling GLTF file upload
 // POST endpoint for handling STL file upload
 app.post("/comment/new", upload.single("file"), async (req, res) => {
-    const stlFile = req.file;
-  
-    // Save the file buffer (binary data) directly to your database
-    // Assuming you are using the 'Comments' model you defined for storing comments
-    const Comments = require("./models/Comments");
-  
     try {
       const newComment = new Comments({
         user: req.body.user,
