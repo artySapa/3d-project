@@ -15,11 +15,11 @@ const CoolObject = ({ makeResponsive }) => {
       const screenWidth = window.innerWidth;
       
       if (screenWidth < 500) {
-        setScale(0.45); // Smaller scale for mobile screens
+        setScale(0.65); // Smaller scale for mobile screens
       } else if (screenWidth > 1200) {
-        setScale(0.6); // Limit the scale for very large screens
+        setScale(0.8); // Limit the scale for very large screens
       } else {
-        setScale(0.55); // Default scale for medium screens
+        setScale(0.75); // Default scale for medium screens
       }
     };
 

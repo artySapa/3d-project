@@ -192,40 +192,44 @@ const ResponseDialog = ({ postId, setDialog, title, content, userName }) => {
     </div>
 
     {/* Comment Input Section (fixed at the bottom) */}
-    {user.username && (
-<div className="p-4 md:p-[20px] border-t flex text-white flex-col bg-main sticky bottom-0 left-0 right-0 w-full">
-        <textarea
-          className="w-full p-2 md:p-3 mb-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Enter your comment..."
-          value={comment}
-          onChange={handleCommentChange}
-        />
-        <input
-          type="file"
-          onChange={handleFileChange}
-          className="mb-3"
-          ref={fileInputRef}
-        />
-        {error && <p className="text-red-500 text-sm">{error}</p>}
-        {file && <DisplayModel file={file} />}
-        <div className="flex justify-end">
-  <button
-    className="px-4 py-4  md:px-6 md:py-4 bg-blue-500 text-white rounded hover:bg-blue-600 transition text-center whitespace-nowrap overflow-hidden"
-    onClick={handleSubmit}
-  >
-    Submit
-  </button>
-  <button
-    className="px-4 py-4 md:px-6 md:py-4 ml-4 bg-gray-300 rounded hover:bg-gray-400 transition text-center whitespace-nowrap overflow-hidden"
-    onClick={() => setDialog(false)}
-  >
-    Cancel
-  </button>
-</div>
+    {/* Comment Input Section (fixed at the bottom) */}
+{user.username && (
+  <div
+  className={`p-4 md:p-[20px] border-t flex text-white flex-col bg-main sticky bottom-0 left-0 right-0 w-full ${
+    file ? 'h-[100%]' : 'h-[30%]'
+  }`}
+>
+    <textarea
+      className="w-full p-2 md:p-3 mb-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+      placeholder="Enter your comment..."
+      value={comment}
+      onChange={handleCommentChange}
+    />
+    <input
+      type="file"
+      onChange={handleFileChange}
+      className="mb-3"
+      ref={fileInputRef}
+    />
+    {error && <p className="text-red-500 text-sm">{error}</p>}
+    {file && <div className="m-2 max-w-[40%]"><DisplayModel file={file} size="small" /></div>} {/* Smaller preview */}
+    <div className="flex justify-end">
+      <button
+        className="px-4 py-4 md:px-6 md:py-4 bg-blue-500 text-white rounded hover:bg-blue-600 transition text-center whitespace-nowrap overflow-hidden"
+        onClick={handleSubmit}
+      >
+        Submit
+      </button>
+      <button
+        className="px-4 py-4 md:px-6 md:py-4 ml-4 bg-gray-300 rounded hover:bg-gray-400 transition text-center whitespace-nowrap overflow-hidden"
+        onClick={() => setDialog(false)}
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+)}
 
-
-      </div>
-    )}
   </div>
 </div>
 
