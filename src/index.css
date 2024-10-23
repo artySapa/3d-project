@@ -9,7 +9,6 @@
   padding: 0;
   font-family: "Poppins", sans-serif;
   color-scheme: dark;
-  overflow-x:hidden;
 }
 p {
   overflow-wrap: break-word;

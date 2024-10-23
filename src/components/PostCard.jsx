@@ -18,7 +18,8 @@ const PostCard = ({
   const [dialog, setDialog] = useState(false);
   const [tempRank, setTempRank] = useState(rank);
 
-  const URL = "https://3d-project-backend.vercel.app";
+  // const URL = "https://3d-project-backend.vercel.app";
+   const URL = "http://localhost:8080";
 
   const userObject = useSelector((state) => state.user);
   const user = userObject.username;
