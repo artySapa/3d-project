@@ -12,8 +12,8 @@ const Profile = () => {
   const user = useSelector((state) => state.user);
   const picture = user.picture;
 
-  // const URL = "https://3d-project-backend.vercel.app";
-  const URL = "http://localhost:8080";
+  const URL = "https://3d-project-backend.vercel.app";
+  // const URL = "http://localhost:8080";
   const navigateTo = useNavigate();
 
   const getFeed = () => {
